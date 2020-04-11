@@ -2,8 +2,14 @@ const Dish = require('../models/Menu')
 const errorHandler = require('../utilus/errorHandler')
 
 module.exports.getAll = async function (req, res) {
+    const query = {}
+
+    if (req.query.category) {
+        query.category = req.query.category
+    }
+
     try {
-        const dishes = await Dish.find({})
+        const dishes = await Dish.find(query)
         res.status(200).json(dishes)
     } catch (e) {
         errorHandler(res, e)

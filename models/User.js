@@ -25,6 +25,7 @@ const userSchema = new Schema({
         ref: 'address',
         type: Schema.Types.ObjectId
     },
+    reg_date: {type: Date, default: new Date},
     imageSrc: {type: String, default: ''}
 })
 

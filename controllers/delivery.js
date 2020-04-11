@@ -31,6 +31,9 @@ module.exports.getAll = async function (req, res) {
         }
         query.total_price['$lte'] = req.query.total_price_end
     }
+    if (req.query.delivery_status) {
+        query.delivery_status = req.query.delivery_status
+    }
 
     try {
         const delivery = await Delivery
