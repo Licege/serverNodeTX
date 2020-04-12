@@ -6,13 +6,13 @@ const storage = multer.diskStorage({
         callback(null, 'uploads/')
     },
     filename(req, file, callback) {
-        const date = moment.format('DDMMYYYY-HHmmss_SSS')
+        const date = moment().format('DDMMYYYY-HHmmss_SSS')
         callback(null, `${date}-${file.originalname}`)
     }
 })
 
 const fileFilter = (req, file, callback) => {
-    if (file.mimeType === 'image/png' || file.mimeType === 'image/jpg') {
+    if (file.mimetype === 'image/png' || file.mimetype === 'image/jpeg') {
         callback(null, true)
     } else {
         callback(null, false)
@@ -20,7 +20,7 @@ const fileFilter = (req, file, callback) => {
 }
 
 const limits = {
-    fileSize: 1024 * 1024 * 10
+    fileSize: 1024 * 1024 * 6
 }
 
 module.exports = multer({storage, fileFilter, limits})

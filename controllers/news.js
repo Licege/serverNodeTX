@@ -30,7 +30,7 @@ module.exports.create = async function (req, res) {
 
     try {
         await news.save()
-        res.status(200).json(news)
+        res.status(201).json(news)
     } catch (e) {
         handleError(res, e)
     }

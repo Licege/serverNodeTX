@@ -14,6 +14,7 @@ const newsSchema = new Schema({
     },
     create_at: {
         type: Date,
+        default: new Date,
         required: true
     },
     imageSrc: {
