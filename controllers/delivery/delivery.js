@@ -1,5 +1,5 @@
-const Delivery = require('../models/Delivery')
-const errorHandler = require('../utilus/errorHandler')
+const Delivery = require('../../models/delivery/Delivery')
+const errorHandler = require('../../utilus/errorHandler')
 
 module.exports.getAll = async function (req, res) {
     const query = {}

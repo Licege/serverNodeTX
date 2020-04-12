@@ -16,11 +16,9 @@ module.exports.getAll = async function (req, res) {
     }
 }
 
-module.exports.getByCategoryId = async function (req, res) {
+module.exports.getById = async function (req, res) {
     try {
-        const dish = await Dish.find({
-            category: req.params.categoryId
-        })
+        const dish = await Dish.find({_id: req.params.id})
         res.status(200).json(dish)
     } catch (e) {
         errorHandler(res, e)
@@ -44,7 +42,7 @@ module.exports.create = async function (req, res) {
         description: req.body.description,
         weight: req.body.weight,
         cost: req.body.cost,
-        category: req.body.category,
+        category_id: req.body.category_id,
         imageSrc: req.file ? req.file.path : ''
     })
 

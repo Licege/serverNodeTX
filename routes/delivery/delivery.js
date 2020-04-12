@@ -1,7 +1,7 @@
 const express = require('express')
 const passport = require('passport')
-const controller = require('../controllers/delivery')
-const adminAuthFailed = require('../utilus/adminAuthFailed')
+const controller = require('../../controllers/delivery/delivery')
+const adminAuthFailed = require('../../utilus/adminAuthFailed')
 const router = express.Router()
 
 router.get('/', passport.authenticate('admin-jwt', {

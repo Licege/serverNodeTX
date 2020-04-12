@@ -11,6 +11,14 @@ const restaurantSchema = new Schema({
         ref: 'contacts',
         type: Schema.Types.ObjectId
     },
+    global_delivery_settings: {
+        ref: 'global-delivery-settings',
+        type: Schema.Types.ObjectId
+    },
+    common_delivery_settings: {
+        ref: 'common-delivery-settings',
+        type: Schema.Types.ObjectId
+    },
     about: {type: String}
 })
 

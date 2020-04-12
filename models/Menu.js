@@ -18,7 +18,7 @@ const dishSchema = new Schema({
         type: Number,
         required: true
     },
-    category: {
+    category_id: {
         ref: 'categories',
         type: Schema.Types.ObjectId
     },

@@ -14,7 +14,7 @@ module.exports = passport => {
         new JwtStrategy(options, async (payload, done) => {
             try {
                 const admin = await Admin.findOne({user_id: payload.userId}).select('_id')
-
+                console.log(admin);
                 if (admin) {
                     done(null, admin)
                 } else {

@@ -1,10 +1,10 @@
 const express = require('express')
 const passport = require('passport')
-const controller = require('../controllers/contacts')
-const adminAuthFailed = require('../utilus/adminAuthFailed')
+const controller = require('../../controllers/delivery/globalSettings')
+const adminAuthFailed = require('../../utilus/adminAuthFailed')
 const router = express.Router()
 
-router.get('/', controller.get)
+router.get('/:id', controller.get)
 router.patch('/:id', passport.authenticate('admin-jwt', {
     session: false,
     failWithError: true
