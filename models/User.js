@@ -14,6 +14,7 @@ const userSchema = new Schema({
     surname: {type: String},
     forename: {type: String},
     patronymic: {type: String},
+    age: {type: Number},
     phone: {
         type: String,
         required: true,

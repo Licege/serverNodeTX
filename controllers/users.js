@@ -2,6 +2,28 @@ const User = require('../models/User')
 const errorHandler = require('../utilus/errorHandler')
 
 module.exports.getAll = async function (req, res) {
+    const query = {}
+    if (req.query.surname) {
+        query.surname = new RegExp('^'+req.query.surname+'$', "i")
+    }
+
+    if (req.query.forename) {
+        query.forename = new RegExp('^'+req.query.forename+'$', "i")
+    }
+
+    if (req.query.age_start) {
+        query.age = {
+            $gte: req.query.age_start
+        }
+    }
+
+    if (req.query.age_end) {
+        if (!req.query.age_start) {
+            query.age = {}
+        }
+        query.age[$lte] = req.query.age_end
+    }
+
     try {
         const users = await User.find({})
         res.status(200).json(users)
