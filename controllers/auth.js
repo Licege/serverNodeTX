@@ -1,10 +1,23 @@
 const bcrypt = require('bcryptjs')
 const jwt = require('jsonwebtoken')
-const {validationResult} = require(('express-validator'))
+const {validationResult} = require('express-validator')
 const User = require('../models/User')
 const Admin = require('../models/Admin')
+const Token = require('../models/Token')
 const keys = require('../config/keys')
+const authHelper = require('../utilus/authHelper')
 const errorHandler = require('../utilus/errorHandler')
+
+const updateTokens = async (userId) => {
+    const accessToken = await authHelper.generateAccessToken(userId)
+    const refreshToken = authHelper.generateRefreshToken()
+    await authHelper.replaceRefreshToken(refreshToken.id, userId)
+
+    return {
+        accessToken,
+        refreshToken: refreshToken.token
+    }
+}
 
 module.exports.login = async function (req, res) {
     try {
@@ -22,7 +35,8 @@ module.exports.login = async function (req, res) {
         if (candidate) {
             const passwordResult = bcrypt.compareSync(req.body.password, candidate.password)
             if (passwordResult) {
-                const tokenBody = {
+
+                /*const tokenBody = {
                     email: candidate.email,
                     userId: candidate._id
                 }
@@ -32,10 +46,13 @@ module.exports.login = async function (req, res) {
                     tokenBody.role = 'admin'
                 }
 
-                const token = jwt.sign(tokenBody, keys.jwt, {expiresIn: 3600})
+                const token = jwt.sign(tokenBody, keys.jwt, {expiresIn: 3600})*/
+
+                const tokens = await updateTokens(candidate._id)
 
                 res.status(200).json({
-                    token: `Bearer ${token}`
+                    accessToken: `Bearer ${tokens.accessToken}`,
+                    refreshToken: tokens.refreshToken
                 })
             } else {
                 res.status(401).json({
@@ -48,9 +65,34 @@ module.exports.login = async function (req, res) {
             })
         }
     } catch (e) {
+        console.log(e)
         res.status(500).json({
             message: 'Что-то пошло не так, попробуйте снова'
         })
+    }
+}
+
+module.exports.refreshTokens = async function (req, res) {
+    const {refreshToken} = req.body
+    let payload
+    try {
+        payload = jwt.verify(refreshToken, keys.jwt)
+        console.log(payload)
+        if (payload.type !== 'refresh') {
+            res.status(400).json({message: 'Невалидный токен!'})
+        }
+
+        const token = await Token.findOne({tokenId: payload.id})
+        console.log(token)
+        if (!token) {
+            res.status(400).json({message: 'Невалидный токен!'})
+        }
+
+        const newToken = await updateTokens(token.userId)
+
+        res.json(newToken)
+    } catch (e) {
+        errorHandler(res, e)
     }
 }
 

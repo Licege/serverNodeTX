@@ -37,12 +37,11 @@ module.exports.create = async function (req, res) {
 }
 
 module.exports.update = async function (req, res) {
-    const updated = new News({
+    const updated = {
         title: req.body.title,
         description: req.body.description,
         short_description: req.body.short_description,
-        create_at: req.body.create_at,
-    })
+    }
 
     if (req.file) {
         updated.imageSrc = req.file.path
@@ -54,6 +53,7 @@ module.exports.update = async function (req, res) {
             {$set: updated},
             {new: true}
         )
+
         res.status(200).json(news)
     } catch (e) {
         handleError(res, e)
