@@ -14,7 +14,7 @@ const updateTokens = async (userId) => {
     await authHelper.replaceRefreshToken(refreshToken.id, userId)
 
     return {
-        accessToken,
+        accessToken: `Bearer ${accessToken}`,
         refreshToken: refreshToken.token
     }
 }
@@ -51,7 +51,7 @@ module.exports.login = async function (req, res) {
                 const tokens = await updateTokens(candidate._id)
 
                 res.status(200).json({
-                    accessToken: `Bearer ${tokens.accessToken}`,
+                    accessToken: tokens.accessToken,
                     refreshToken: tokens.refreshToken
                 })
             } else {
