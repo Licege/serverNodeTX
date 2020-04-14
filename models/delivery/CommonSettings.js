@@ -2,9 +2,9 @@ const mongoose = require('mongoose')
 const Schema = mongoose.Schema
 
 const commonSettingsSchema = new Schema({
-    city_id: {
-        ref: 'cities',
-        type: Schema.Types.ObjectId,
+    city: {
+        type: String,
+        unique: true,
         required: true
     },
     price_for_delivery: {
@@ -22,4 +22,4 @@ const commonSettingsSchema = new Schema({
     }
 })
 
-module.export = mongoose.model('common-delivery-settings', commonSettingsSchema)
+module.exports = mongoose.model('common-delivery-settings', commonSettingsSchema)

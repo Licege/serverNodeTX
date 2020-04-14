@@ -6,7 +6,7 @@ const router = express.Router()
 
 router.get('/', controller.getAll)
 router.get('/:id', controller.getById)
-router.post('/:id', passport.authenticate('admin-jwt', {
+router.post('/', passport.authenticate('admin-jwt', {
     session: false,
     failWithError: true
 }), controller.create, adminAuthFailed)

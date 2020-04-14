@@ -12,4 +12,4 @@ const globalSettingsSchema = new Schema({
     }
 })
 
-module.export = mongoose.model('global-delivery-settings', globalSettingsSchema)
+module.exports = mongoose.model('global-delivery-settings', globalSettingsSchema)

@@ -1,4 +1,5 @@
 const Dish = require('../models/Menu')
+const Category = require('../models/Category')
 const errorHandler = require('../utilus/errorHandler')
 
 module.exports.getAll = async function (req, res) {
@@ -7,9 +8,18 @@ module.exports.getAll = async function (req, res) {
     if (req.query.category) {
         query.category = req.query.category
     }
-
     try {
         const dishes = await Dish.find(query)
+        res.status(200).json(dishes)
+    } catch (e) {
+        errorHandler(res, e)
+    }
+}
+
+module.exports.getByCategory = async function (req, res) {
+    try {
+        const category = await Category.findOne({title_en: req.params.id})
+        const dishes = await Dish.find({category_id: category._id})
         res.status(200).json(dishes)
     } catch (e) {
         errorHandler(res, e)

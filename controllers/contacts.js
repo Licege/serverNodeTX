@@ -3,7 +3,7 @@ const handlerError = require('../utilus/errorHandler')
 
 module.exports.get = async function (req, res) {
     try {
-        const contacts = await Contacts.find({})
+        const contacts = await Contacts.findOne({})
         res.status(200).json(contacts)
     } catch (e) {
         handlerError(res, e)

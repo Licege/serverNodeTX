@@ -45,7 +45,7 @@ const deliverySchema = new Schema({
             title: {
                 type: String
             },
-            quantity: {
+            count: {
                 type: Number
             },
             cost: {
