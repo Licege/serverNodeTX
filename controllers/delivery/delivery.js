@@ -1,4 +1,6 @@
 const Delivery = require('../../models/delivery/Delivery')
+const Settings = require('../../models/delivery/CommonSettings')
+const Dishes = require('../../models/Menu')
 const errorHandler = require('../../utilus/errorHandler')
 
 module.exports.getAll = async function (req, res) {
@@ -58,6 +60,41 @@ module.exports.getById = async function (req, res) {
 
 module.exports.create = async function (req, res) {
     try {
+        //валидация
+        if (req.body.delivery_type === 'home') {
+            const settings = await Settings.findOne({city: req.body.address.city})
+            if (!settings) {
+                res.status(400).json({message: 'Невалидные данные!'})
+                if (settings.free_delivery > req.body.total_price && settings.price_for_delivery !== req.body.price_for_delivery) {
+                    res.status(400).json({message: 'Невалидные данные!'})
+                    return;
+                } else if (settings.free_delivery <= req.body.total_price && req.body.price_for_delivery !== 0) {
+                    res.status(400).json({message: 'Невалидные данные!'})
+                    return;
+                }
+            }
+        } else if (req.body.price_for_delivery !== 0) {
+            res.status(400).json({message: 'Невалидные данные!'})
+            return;
+        }
+
+        const dishes = await Dishes.find({})
+        let countItem = 0;
+        let totalPrice = 0;
+        for (let i = 0; i < req.body.list.length; i++) {
+            let dish = dishes.find(dish => dish._id.toString() === req.body.list[i].dish_id)
+            if (req.body.list[i].cost !== dish.cost) {
+                res.status(400).json({message: 'Невалидные данные!'})
+                return;
+            }
+            totalPrice = totalPrice + dish.cost * req.body.list[i].count
+            countItem++
+        }
+        if (req.body.total_price !== totalPrice || req.body.list.length !== countItem) {
+            res.status(400).json({message: 'Невалидные данные!'})
+            return;
+        }
+
         const delivery = await new Delivery(req.body).save()
         res.status(200).json(delivery)
     } catch (e) {

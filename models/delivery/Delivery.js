@@ -9,8 +9,12 @@ const deliverySchema = new Schema({
     delivery_type: {type: String, required: true},
     odd_money: {type: String},
     address: {
-        ref: 'address',
-        type: Schema.Types.ObjectId
+        city: {type: String, required: true},
+        street: {type: String},
+        house: {type: String},
+        flat: {type: String},
+        floor: {type: String},
+        intercom: {type: String}
     },
     restaurant: {
         ref: 'restaurant',
@@ -42,6 +46,10 @@ const deliverySchema = new Schema({
     },
     list: [
         {
+            dish_id: {
+                type: Schema.Types.ObjectId,
+                required: true
+            },
             title: {
                 type: String
             },
