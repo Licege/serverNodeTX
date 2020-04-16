@@ -4,7 +4,11 @@ const handleError = require('../utilus/errorHandler')
 module.exports.getAll = async function (req, res) {
     try {
         const news = await News.find({})
-        res.status(200).json(news)
+        const total_count = await News.countDocuments()
+        res.status(200).json({
+            news,
+            total_count
+        })
     } catch (e) {
         handleError(res, e)
     }

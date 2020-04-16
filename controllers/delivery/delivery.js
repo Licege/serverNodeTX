@@ -96,7 +96,7 @@ module.exports.create = async function (req, res) {
         }
 
         const delivery = await new Delivery(req.body).save()
-        res.status(200).json(delivery)
+        res.status(201).json(delivery)
     } catch (e) {
         errorHandler(res, e)
     }
