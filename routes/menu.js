@@ -5,7 +5,7 @@ const router = express.Router()
 
 router.get('/', controller.getAll)
 router.get('/:id', controller.getByCategory)
-router.get('dish/:id', controller.getById)
+router.get('/dish/:id', controller.getById)
 router.delete('/:id', controller.remove)
 router.post('/', upload.single('image'), controller.create)
 router.patch('/:id', upload.single('image'), controller.update)

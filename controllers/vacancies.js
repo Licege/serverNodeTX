@@ -3,7 +3,7 @@ const errorHandler = require('../utilus/errorHandler')
 
 module.exports.getAll = async function (req, res) {
     try {
-        const vacancies = Vacancies.find({})
+        const vacancies = await Vacancies.find({})
         res.status(200).json(vacancies)
     } catch (e) {
         errorHandler(res, e)
