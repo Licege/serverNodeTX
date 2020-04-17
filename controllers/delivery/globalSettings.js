@@ -3,7 +3,7 @@ const errorHandler = require('../../utilus/errorHandler')
 
 module.exports.get = async function (req, res) {
     try {
-        const settings = await GlobalSettings.find({})
+        const settings = await GlobalSettings.findOne({})
         res.status(200).json(settings)
     } catch (e) {
         errorHandler(res, e)

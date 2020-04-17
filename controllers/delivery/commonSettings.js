@@ -13,7 +13,7 @@ module.exports.getAll = async function (req, res) {
 
 module.exports.getById = async function (req, res) {
     try {
-        const settings = await CommonDelivery.find({_id: req.params.id})
+        const settings = await CommonDelivery.findOne({_id: req.params.id})
         res.status(200).json(settings)
     } catch (e) {
         errorHandler(res, e)
