@@ -65,7 +65,6 @@ module.exports.login = async function (req, res) {
             })
         }
     } catch (e) {
-        console.log(e)
         res.status(500).json({
             message: 'Что-то пошло не так, попробуйте снова'
         })
@@ -77,13 +76,11 @@ module.exports.refreshTokens = async function (req, res) {
     let payload
     try {
         payload = jwt.verify(refreshToken, keys.jwt)
-        console.log(payload)
         if (payload.type !== 'refresh') {
             res.status(400).json({message: 'Невалидный токен!'})
         }
 
         const token = await Token.findOne({tokenId: payload.id})
-        console.log(token)
         if (!token) {
             res.status(400).json({message: 'Невалидный токен!'})
         }

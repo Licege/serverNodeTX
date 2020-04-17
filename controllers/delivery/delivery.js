@@ -17,11 +17,6 @@ module.exports.getAll = async function (req, res) {
         }
         query.create_at['$lte'] = req.query.create_at_end
     }
-
-    if (req.query.payment_status) {
-        query.payment_status = req.query.payment_status
-    }
-
     if (req.query.total_price_start) {
         query.total_price = {
             $gte: req.query.total_price_start
@@ -33,9 +28,22 @@ module.exports.getAll = async function (req, res) {
         }
         query.total_price['$lte'] = req.query.total_price_end
     }
+    if (req.query.payment_status) {
+        query.payment_status = req.query.payment_status
+    }
     if (req.query.delivery_status) {
         query.delivery_status = req.query.delivery_status
     }
+    if (req.query.payment_type) {
+        query.payment_type = req.query.payment_type
+    }
+    if (req.query.delivery_type) {
+        query.delivery_type = req.query.delivery_type
+    }
+    if (req.query.status) {
+        query.status = req.query.status
+    }
+    console.log(query);
 
     try {
         const delivery = await Delivery
