@@ -6,6 +6,9 @@ const errorHandler = require('../../utilus/errorHandler')
 module.exports.getAll = async function (req, res) {
     const query = {}
 
+    if (req.query.phone) {
+        query.phone = { $regex: '.*' + req.query.phone + '.*' }
+    }
     if (req.query.create_at_start) {
         query.create_at = {
             $gte: req.query.create_at_start
@@ -43,15 +46,17 @@ module.exports.getAll = async function (req, res) {
     if (req.query.status) {
         query.status = req.query.status
     }
-    console.log(query);
 
     try {
         const delivery = await Delivery
             .find(query)
             .sort({create_at: -1})
-            .skip(+req.query.offset)
-            .limit(+req.query.limit)
-        res.status(200).json(delivery)
+            .skip((+req.query.offset-1)*5)
+            .limit(5)
+        const total_count = await Delivery
+            .find(query)
+            .countDocuments()
+        res.status(200).json({delivery, total_count})
     } catch (e) {
         errorHandler(res, e)
     }
