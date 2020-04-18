@@ -28,7 +28,7 @@ module.exports.getByCategory = async function (req, res) {
 
 module.exports.getById = async function (req, res) {
     try {
-        const dish = await Dish.find({_id: req.params.id})
+        const dish = await Dish.findOne({_id: req.params.id})
         res.status(200).json(dish)
     } catch (e) {
         errorHandler(res, e)
