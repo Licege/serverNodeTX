@@ -27,7 +27,7 @@ module.exports.getAll = async function (req, res) {
         query.create_at[$lte] = req.query.create_at_end
     }
     try {
-        const orders = await Orders.find({query})
+        const orders = await Orders.find(query)
         res.status(200).json(orders)
     } catch (e) {
         errorHandler(res, e)

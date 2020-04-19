@@ -2,11 +2,7 @@ const mongoose = require('mongoose')
 const Schema = mongoose.Schema
 
 const orderSchema = new Schema({
-    surname: {
-        type: String,
-        required: true
-    },
-    forename: {
+    name: {
         type: String,
         required: true
     },
@@ -27,7 +23,6 @@ const orderSchema = new Schema({
     },
     status: {
         type: Number,
-        required: true,
         default: 0
     }
 })

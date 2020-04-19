@@ -1,5 +1,6 @@
 const Dish = require('../models/Menu')
 const Category = require('../models/Category')
+const PdfMenu = require('../models/PdfMenu')
 const errorHandler = require('../utilus/errorHandler')
 
 module.exports.getAll = async function (req, res) {
@@ -84,6 +85,25 @@ module.exports.update = async function (req, res) {
             {new: true}
             )
         res.status(200).json(dish)
+    } catch (e) {
+        errorHandler(res, e)
+    }
+}
+
+module.exports.uploadPdf = async function (req, res) {
+    try {
+        if (req.file) {
+            const menu = {
+                fileSrc: req.file.path
+            }
+
+            await menu.save()
+            res.status(201).json(menu)
+        } else {
+            res.status(400).json({
+                message: 'Ошибка файл не найден!'
+            })
+        }
     } catch (e) {
         errorHandler(res, e)
     }

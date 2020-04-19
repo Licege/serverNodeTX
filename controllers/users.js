@@ -26,7 +26,8 @@ module.exports.getAll = async function (req, res) {
 
     try {
         const users = await User.find({})
-        res.status(200).json(users)
+        const total_count = await User.find({}).countDocuments()
+        res.status(200).json({users, total_count})
     } catch (e) {
         errorHandler(res, e)
     }

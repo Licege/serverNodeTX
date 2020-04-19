@@ -31,6 +31,17 @@ module.exports.getAll = async function (req, res) {
         }
         query.total_price['$lte'] = req.query.total_price_end
     }
+    if (req.query.time_delivery_start) {
+        query.time_delivery = {
+            $gte: req.query.time_delivery_start
+        }
+    }
+    if (req.query.time_delivery_end) {
+        if (!req.query.time_delivery_start) {
+            query.time_delivery = {}
+        }
+        query.time_delivery['$lte'] = req.query.time_delivery_end
+    }
     if (req.query.payment_status) {
         query.payment_status = req.query.payment_status
     }
