@@ -13,5 +13,9 @@ router.get('/:id', passport.authenticate('admin-jwt', {
     failWithError: true
 }), controller.getById, adminAuthFailed)
 router.post('/', controller.create)
+router.patch('/:id', passport.authenticate('admin-jwt', {
+    session: false,
+    failWithError: true
+}), controller.update, adminAuthFailed)
 
 module.exports = router

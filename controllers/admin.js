@@ -3,7 +3,7 @@ const errorHandler = require('../utilus/errorHandler')
 
 module.exports.getAll = async function (req, res) {
     try {
-        const admin = await Admin.find({}).populate({path: 'users', model: 'users'})
+        const admin = await Admin.find({}).populate('user_id')
         res.status(200).json(admin)
     } catch (e) {
         errorHandler(res, e)

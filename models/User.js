@@ -23,8 +23,12 @@ const userSchema = new Schema({
     card_number: {type: Number},
     birthday: {type: Date},
     address: {
-        ref: 'address',
-        type: Schema.Types.ObjectId
+        city: {type: String, required: true},
+        street: {type: String},
+        house: {type: String},
+        flat: {type: String},
+        floor: {type: String},
+        intercom: {type: String}
     },
     reg_date: {type: Date, default: new Date},
     imageSrc: {type: String, default: ''}

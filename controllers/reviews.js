@@ -28,6 +28,7 @@ module.exports.getAll = async function (req, res) {
             .sort({create_at: -1})
             .skip(+req.query.offset)
             .limit(+req.query.limit)
+            .populate('user')
         res.status(200).json(reviews)
     } catch (e) {
         errorHandler(res, e)
@@ -36,7 +37,7 @@ module.exports.getAll = async function (req, res) {
 
 module.exports.getById = async function (req, res) {
     try {
-        const review = await Reviews.findOne({_id: req.params.id})
+        const review = await Reviews.findOne({_id: req.params.id}).populate('user')
         res.status(200).json(review)
     } catch (e) {
         errorHandler(res, e)
