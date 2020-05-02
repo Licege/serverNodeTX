@@ -11,6 +11,10 @@ module.exports.getAll = async function (req, res) {
         query.forename = new RegExp('^'+req.query.forename+'$', "i")
     }
 
+    if (req.query.email) {
+        query.email = req.query.email
+    }
+
     if (req.query.age_start) {
         query.age = {
             $gte: req.query.age_start
@@ -24,9 +28,13 @@ module.exports.getAll = async function (req, res) {
         query.age[$lte] = req.query.age_end
     }
 
+    if (req.query.phone) {
+        query.phone = req.query.phone
+    }
+
     try {
-        const users = await User.find({})
-        const total_count = await User.find({}).countDocuments()
+        const users = await User.find(query)
+        const total_count = await User.find(query).countDocuments()
         res.status(200).json({users, total_count})
     } catch (e) {
         errorHandler(res, e)

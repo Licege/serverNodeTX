@@ -35,6 +35,19 @@ module.exports.getAll = async function (req, res) {
     }
 }
 
+module.exports.publicGetAll = async function (req, res) {
+    try {
+        const reviews = await Reviews
+            .find({status: 1})
+            .skip(+req.query.offset)
+            .limit(+req.query.limit)
+            .populate('user')
+        res.status(200).json(reviews)
+    } catch (e) {
+        errorHandler(res, e)
+    }
+}
+
 module.exports.getById = async function (req, res) {
     try {
         const review = await Reviews.findOne({_id: req.params.id}).populate('user')
@@ -47,7 +60,7 @@ module.exports.getById = async function (req, res) {
 module.exports.create = async function (req, res) {
     try {
         const review = await new Reviews({
-            user: req.user.id,
+            user: req.user,
             rating: req.body.rating,
             description: req.body.description,
             create_at: req.body.create_at,
