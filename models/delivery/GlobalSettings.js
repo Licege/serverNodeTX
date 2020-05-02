@@ -9,7 +9,20 @@ const globalSettingsSchema = new Schema({
     phone_for_sms: {
         type: String,
         required: true
+    },
+    payment_type_cash: {
+        type: Boolean,
+        required: true
+    },
+    payment_type_cashless: {
+        type: Boolean,
+        required: true
+    },
+    payment_type_online: {
+        type: Boolean,
+        required: true
     }
+
 })
 
 module.exports = mongoose.model('global-delivery-settings', globalSettingsSchema)

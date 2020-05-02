@@ -20,10 +20,9 @@ const userSchema = new Schema({
         required: true,
         unique: true
     },
-    card_number: {type: Number},
     birthday: {type: Date},
     address: {
-        city: {type: String, required: true},
+        city: {type: String, required: true, default: 'Калининград'},
         street: {type: String},
         house: {type: String},
         flat: {type: String},

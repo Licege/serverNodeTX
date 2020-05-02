@@ -22,6 +22,11 @@ const dishSchema = new Schema({
         ref: 'categories',
         type: Schema.Types.ObjectId
     },
+    is_delivery: {
+        type: Boolean,
+        required: true,
+        default: true
+    },
     imageSrc: {
         type: String,
         default: ''

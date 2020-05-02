@@ -10,6 +10,15 @@ module.exports.getAll = async function (req, res) {
     }
 }
 
+module.exports.get = async function(req, res) {
+    try {
+        const category = await Category.findOne({_id: req.params.id})
+        res.status(200).json(category)
+    } catch (e) {
+        errorHandler(res, e)
+    }
+}
+
 module.exports.remove = async function (req, res) {
     try {
         await Category.remove({_id: req.params.id})

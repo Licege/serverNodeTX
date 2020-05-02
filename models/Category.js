@@ -4,13 +4,18 @@ const Schema = mongoose.Schema
 const categorySchema = new Schema({
     title: {
         type: String,
-        require: true,
+        required: true,
         unique: true
     },
     title_en: {
         type: String,
-        require: true,
+        required: true,
         unique: true
+    },
+    is_delivery: {
+        type: Boolean,
+        required: true,
+        default: true
     }
 })
 

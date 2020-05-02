@@ -138,3 +138,10 @@ module.exports.update = async function (req, res) {
         errorHandler(res,  e)
     }
 }
+/*
+
+module.exports.addDeliveryIo = async function (io, Delivery) {
+    try {
+        const delivery = await
+    }
+}*/

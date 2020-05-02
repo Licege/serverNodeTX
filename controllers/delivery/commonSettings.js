@@ -4,7 +4,6 @@ const errorHandler = require('../../utilus/errorHandler')
 module.exports.getAll = async function (req, res) {
     try {
         const settings = await CommonDelivery.find({})
-        console.log(settings);
         res.status(200).json(settings)
     } catch (e) {
         errorHandler(res, e)

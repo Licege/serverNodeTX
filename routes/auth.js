@@ -10,7 +10,7 @@ router.post('/login',
             .isLength({min: 8})
     ],
     controller.login)
-router.post('/register', controller.register)
+router.post('/registration', controller.register)
 router.post('/refresh-token', controller.refreshTokens)
 
 module.exports = router

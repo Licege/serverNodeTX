@@ -2,7 +2,6 @@ const bcrypt = require('bcryptjs')
 const jwt = require('jsonwebtoken')
 const {validationResult} = require('express-validator')
 const User = require('../models/User')
-const Admin = require('../models/Admin')
 const Token = require('../models/Token')
 const keys = require('../config/keys')
 const authHelper = require('../utilus/authHelper')
@@ -26,7 +25,7 @@ module.exports.login = async function (req, res) {
         if (!errors.isEmpty()) {
             return res.status(400).json({
                 errors: errors.array(),
-                message: 'Некорректные денные'
+                message: 'Некорректные данные'
             })
         }
 
@@ -52,7 +51,8 @@ module.exports.login = async function (req, res) {
 
                 res.status(200).json({
                     accessToken: tokens.accessToken,
-                    refreshToken: tokens.refreshToken
+                    refreshToken: tokens.refreshToken,
+                    profile: candidate
                 })
             } else {
                 res.status(401).json({
@@ -94,18 +94,27 @@ module.exports.refreshTokens = async function (req, res) {
 }
 
 module.exports.register = async function (req, res) {
-    const candidate = await User.findOne({email: req.body.email})
+    const email = await User.findOne({email: req.body.email})
+    const phone = await User.findOne({phone: req.body.phone})
 
-    if (candidate) {
+    if (email) {
         res.status(409).json({
             message: 'Такой email уже зарегистрирован. Попробуйте другой.'
+        })
+    } else if (phone) {
+        res.status(409).json({
+            message: 'Такой телефон уже зарегистрирован. Попробуйте другой.'
         })
     } else {
         const salt = bcrypt.genSaltSync(10)
         const password = req.body.password
         const user = new User({
             email: req.body.email,
-            password: bcrypt.hashSync(password, salt)
+            password: bcrypt.hashSync(password, salt),
+            surname: req.body.surname,
+            forename: req.body.forename,
+            patronymic: req.body.patronymic,
+            phone: req.body.phone
         })
 
         try {

@@ -2,6 +2,8 @@ const express = require('express')
 const mongoose = require('mongoose');
 const passport = require('passport')
 const bodyParser = require('body-parser')
+/*const socket = require('socket.io')
+const http = require('http')*/
 
 const adminRoutes = require('./routes/admin')
 const authRoutes = require('./routes/auth')
@@ -20,6 +22,8 @@ const usersRoutes = require('./routes/users')
 
 const keys = require('./config/keys')
 const app = express()
+/*const server = http.Server(app)
+const io = socket(server)*/
 
 mongoose.connect(keys.mongoURL, {useNewUrlParser: true, useUnifiedTopology: true, useCreateIndex: true, useFindAndModify: false})
     .then(() => console.log('MongoDB connected.'))
@@ -34,6 +38,13 @@ app.use('/uploads', express.static('uploads'))
 app.use(bodyParser.urlencoded({extended: true}))
 app.use(bodyParser.json())
 app.use(require('cors')())
+
+/*io.on('connection', (socket) => {
+    console.log('Connected to Socket!' + socket.id)
+    socket.on('updateDelivery', (Delivery) => {
+        //контроллер
+    })
+})*/
 
 app.use('/api/admin', adminRoutes)
 app.use('/api/auth', authRoutes)

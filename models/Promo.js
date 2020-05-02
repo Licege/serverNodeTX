@@ -16,6 +16,10 @@ const promoSchema = new Schema({
         type: Number,
         default: 0
     },
+    show: {
+        type: Boolean,
+        default: true
+    },
     imageSrc: {
         type: String,
         default: ''
