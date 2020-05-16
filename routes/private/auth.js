@@ -1,6 +1,6 @@
 const express = require('express')
 const {check} = require('express-validator')
-const controller = require('../controllers/auth')
+const controller = require('../../controllers/auth')
 const router = express.Router()
 
 router.post('/login',

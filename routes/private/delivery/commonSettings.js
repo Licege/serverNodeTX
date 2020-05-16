@@ -1,7 +1,7 @@
 const express = require('express')
 const passport = require('passport')
-const controller = require('../../controllers/delivery/commonSettings')
-const adminAuthFailed = require('../../utilus/adminAuthFailed')
+const controller = require('../../../controllers/delivery/commonSettings')
+const adminAuthFailed = require('../../../utilus/adminAuthFailed')
 const router = express.Router()
 
 router.get('/', controller.getAll)
