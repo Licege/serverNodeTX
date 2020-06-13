@@ -1,5 +1,6 @@
 const Delivery = require('../../models/delivery/Delivery')
 const Settings = require('../../models/delivery/CommonSettings')
+const GlobalSettings = require('../../models/delivery/GlobalSettings')
 const Dishes = require('../../models/Menu')
 const errorHandler = require('../../utilus/errorHandler')
 
@@ -85,6 +86,8 @@ module.exports.getById = async function (req, res) {
 module.exports.create = async function (req, res) {
     try {
         //валидация
+        const globalSettings = await GlobalSettings.findOne()
+
         if (req.body.delivery_type === 'home') {
             const settings = await Settings.findOne({city: req.body.address.city})
             if (!settings) {
@@ -97,9 +100,11 @@ module.exports.create = async function (req, res) {
                     return;
                 }
             }
-        } else if (req.body.price_for_delivery !== 0) {
-            res.status(400).json({message: 'Невалидные данные!'})
-            return;
+        } else if (req.body.delivery_type === 'restaurant') {
+            if (req.body.sale_for_pickup !== globalSettings.sale_for_pickup) {
+                res.status(400).json({message: 'Невалидные данные!'})
+                return;
+            }
         }
 
         const dishes = await Dishes.find({})
@@ -138,10 +143,3 @@ module.exports.update = async function (req, res) {
         errorHandler(res,  e)
     }
 }
-/*
-
-module.exports.addDeliveryIo = async function (io, Delivery) {
-    try {
-        const delivery = await
-    }
-}*/

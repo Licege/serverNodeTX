@@ -21,8 +21,12 @@ const globalSettingsSchema = new Schema({
     payment_type_online: {
         type: Boolean,
         required: true
+    },
+    sale_for_pickup: {
+        type: Number,
+        required: true,
+        default: 0
     }
-
 })
 
 module.exports = mongoose.model('global-delivery-settings', globalSettingsSchema)

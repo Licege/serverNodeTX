@@ -66,7 +66,6 @@ module.exports.update = async function (req, res) {
 
 module.exports.delete = async function (req, res) {
     try {
-        console.log(req.params.id)
         await News.remove({_id: req.params.id})
         res.status(200).json({
             message: 'Новость успешно удалена.'

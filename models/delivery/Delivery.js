@@ -62,6 +62,7 @@ const deliverySchema = new Schema({
         }
     ],
     delivery_cost: {type: Number},
+    sale_for_pickup: {type: Number},
     total_price: {type: Number}
 })
 

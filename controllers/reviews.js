@@ -59,6 +59,13 @@ module.exports.getById = async function (req, res) {
 
 module.exports.create = async function (req, res) {
     try {
+        const reviews = await Reviews
+            .find()
+            .populate('user')
+
+        if (hasReview(req.user, reviews)) {
+            console.log('д1а')
+        }
         const review = await new Reviews({
             user: req.user,
             rating: req.body.rating,
@@ -68,7 +75,11 @@ module.exports.create = async function (req, res) {
         }).save()
         res.status(200).json(review)
     } catch (e) {
-        errorHandler(res, e)
+        if (e.code === 11000) {
+            res.status(400).json({message: 'Отзыв уже был оставлен!'})
+        } else {
+            errorHandler(res, e)
+        }
     }
 }
 
@@ -99,4 +110,19 @@ module.exports.remove = async function (req, res) {
     } catch (e) {
         errorHandler(res, e)
     }
+}
+
+// status
+// 0 - Неодобрен
+// 1 - Одобрен
+// 2 - Отклонен
+const hasReview = (userId, reviews) => {
+    const review = reviews.filter(r => r.user._id.toString() === userId)[0]
+
+    if (review && review.length) {
+        console.log('отзыв ', !(review.status === 0 || review.status === 1))
+        return !(review.status === 0 || review.status === 1)
+    }
+
+    return false
 }

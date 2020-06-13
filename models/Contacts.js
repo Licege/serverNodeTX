@@ -25,7 +25,12 @@ const contactsSchema = new Schema ({
     },
     address: {
         type: String
-    }
+    },
+    openHours: [
+        {
+            type: String
+        }
+    ]
 })
 
 module.exports = mongoose.model('contacts', contactsSchema)
