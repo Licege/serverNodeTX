@@ -33,6 +33,8 @@ const newsPublicRoutes = require('./routes/public/news')
 const reviewsPublicRoutes = require('./routes/public/reviews')
 const vacanciesPublicRoutes = require('./routes/public/vacancies')
 
+const filesRouter = require('./routes/files')
+
 const keys = require('./config/keys')
 const app = express()
 /*const server = http.Server(app)
@@ -88,6 +90,8 @@ app.use('/api/public/menu', menuPublicRoutes)
 app.use('/api/public/news', newsPublicRoutes)
 app.use('/api/public/reviews', reviewsPublicRoutes)
 app.use('/api/public/vacancies', vacanciesPublicRoutes)
+
+app.use('/api/files', filesRouter)
 
 
 module.exports = app
