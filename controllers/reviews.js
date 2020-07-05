@@ -87,17 +87,20 @@ module.exports.update = async function (req, res) {
     const updated = {
         rating: req.body.rating,
         description: req.body.description,
-        create_at: req.body.create_at
+        create_at: req.body.create_at,
+        status: req.body.status
     }
     if (req.file) {
         updated.imageSrc = req.file.path
     }
     try {
-        const review = await Reviews.findOneAndUpdate(
+        const review = await Reviews
+            .findOneAndUpdate(
             {_id: req.params.id},
             {$set: updated},
             {new: true}
-        )
+             )
+            .populate('user')
         res.status(200).json(review)
     } catch (e) {
         errorHandler(res, e)

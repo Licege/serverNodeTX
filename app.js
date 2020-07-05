@@ -20,6 +20,9 @@ const reviewsPrivateRoutes = require('./routes/private/reviews')
 const vacanciesPrivateRoutes = require('./routes/private/vacancies')
 const usersPrivateRoutes = require('./routes/private/users')
 
+const averageChecksPrivateRoutes = require('./routes/private/Statistics/averageChecks')
+
+
 const authPublicRoutes = require('./routes/public/auth')
 const categoriesPublicRouter = require('./routes/public/categories')
 const contactsPublicRoutes = require('./routes/public/contacts')
@@ -76,6 +79,8 @@ app.use('/api/private/news', newsPrivateRoutes)
 app.use('/api/private/reviews', reviewsPrivateRoutes)
 app.use('/api/private/vacancies', vacanciesPrivateRoutes)
 app.use('/api/private/users', usersPrivateRoutes)
+
+app.use('/api/private/statistics/average-checks', averageChecksPrivateRoutes)
 
 {/* Public */}
 app.use('/api/public/auth', authPublicRoutes)

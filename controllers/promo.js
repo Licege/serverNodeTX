@@ -29,7 +29,7 @@ module.exports.create = async function (req, res) {
         short_description: req.body.short_description,
         description: req.body.description,
         status: req.body.status,
-        imageSrc: req.file ? req.file : ''
+        imageSrc: req.file ? req.file.path : ''
     })
     try {
         await promo.save()
