@@ -2,8 +2,8 @@ const express = require('express')
 const mongoose = require('mongoose');
 const passport = require('passport')
 const bodyParser = require('body-parser')
-/*const socket = require('socket.io')
-const http = require('http')*/
+const socket = require('socket.io')
+//const http = require('http')
 
 const adminPrivateRoutes = require('./routes/private/admin')
 const authPrivateRoutes = require('./routes/private/auth')
@@ -40,8 +40,10 @@ const filesRouter = require('./routes/files')
 
 const keys = require('./config/keys')
 const app = express()
-/*const server = http.Server(app)
-const io = socket(server)*/
+const server = require('http').createServer(app)
+const io = require('socket.io').listen(server)
+
+server.listen(9091)
 
 mongoose.connect(keys.mongoURL, {useNewUrlParser: true, useUnifiedTopology: true, useCreateIndex: true, useFindAndModify: false})
     .then(() => console.log('MongoDB connected.'))
@@ -57,12 +59,22 @@ app.use(bodyParser.urlencoded({extended: true}))
 app.use(bodyParser.json())
 app.use(require('cors')())
 
-/*io.on('connection', (socket) => {
+connections = []
+
+io.on('connection', (socket) => {
     console.log('Connected to Socket!' + socket.id)
-    socket.on('updateDelivery', (Delivery) => {
+    connections.push(socket)
+
+    socket.emit('event://get-delivery', (Delivery) => {
         //контроллер
+        console.log('1')
     })
-})*/
+
+    socket.on('disconnect', (data) => {
+        connections.splice(connections.indexOf(socket), 1)
+        console.log('Успешное отсоединение')
+    })
+})
 
 {/* Private */}
 app.use('/api/private/auth', authPrivateRoutes)
