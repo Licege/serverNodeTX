@@ -1,8 +1,8 @@
 const express = require('express')
-const mongoose = require('mongoose');
+const mongoose = require('mongoose')
 const passport = require('passport')
 const bodyParser = require('body-parser')
-const socket = require('socket.io')
+// const socket = require('socket.io')
 //const http = require('http')
 
 const adminPrivateRoutes = require('./routes/private/admin')
@@ -38,6 +38,8 @@ const vacanciesPublicRoutes = require('./routes/public/vacancies')
 
 const filesRouter = require('./routes/files')
 
+const {createDeliveryController} = require('./controllers/sockets/delivery');
+
 const keys = require('./config/keys')
 const app = express()
 const server = require('http').createServer(app)
@@ -65,12 +67,16 @@ io.on('connection', (socket) => {
     console.log('Connected to Socket!' + socket.id)
     connections.push(socket)
 
-    socket.emit('event://get-delivery', (Delivery) => {
-        //контроллер
-        console.log('1')
+   socket.on('event://send-delivery', async (data) => {
+        const order = await createDeliveryController(JSON.parse(data))
+        if (order.status === 201) {
+            socket.broadcast.emit('event://get-delivery', JSON.stringify(order.data))
+        } else {
+            socket.emit('event://send-delivery-error', JSON.stringify(order))
+        }
     })
 
-    socket.on('disconnect', (data) => {
+    socket.on('disconnect', () => {
         connections.splice(connections.indexOf(socket), 1)
         console.log('Успешное отсоединение')
     })

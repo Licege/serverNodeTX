@@ -92,13 +92,12 @@ module.exports.create = async function (req, res) {
             const settings = await Settings.findOne({city: req.body.address.city})
             if (!settings) {
                 res.status(400).json({message: 'Невалидные данные!'})
-                if (settings.free_delivery > req.body.total_price && settings.price_for_delivery !== req.body.price_for_delivery) {
-                    res.status(400).json({message: 'Невалидные данные!'})
-                    return;
-                } else if (settings.free_delivery <= req.body.total_price && req.body.price_for_delivery !== 0) {
-                    res.status(400).json({message: 'Невалидные данные!'})
-                    return;
-                }
+            } else if (settings.free_delivery > req.body.total_price && settings.price_for_delivery !== req.body.delivery_cost) {
+                res.status(400).json({message: 'Невалидные данные!'})
+                return;
+            } else if (settings.free_delivery <= req.body.total_price && req.body.delivery_cost !== 0) {
+                res.status(400).json({message: 'Невалидные данные!'})
+                return;
             }
         } else if (req.body.delivery_type === 'restaurant') {
             if (req.body.sale_for_pickup !== globalSettings.sale_for_pickup) {
