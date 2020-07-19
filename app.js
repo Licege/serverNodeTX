@@ -2,6 +2,7 @@ const express = require('express')
 const mongoose = require('mongoose')
 const passport = require('passport')
 const bodyParser = require('body-parser')
+const fs = require('fs')
 // const socket = require('socket.io')
 //const http = require('http')
 
@@ -39,10 +40,14 @@ const vacanciesPublicRoutes = require('./routes/public/vacancies')
 const filesRouter = require('./routes/files')
 
 const {createDeliveryController} = require('./controllers/sockets/delivery');
-
+/**/
+const privateKey = fs.readFileSync('../../certs/selfsigned.key')
+const certificate = fs.readFileSync('../../certs/selfsigned.crt')
+const credentials = {key: privateKey, cert: certificate}
+/**/
 const keys = require('./config/keys')
-const app = express()
-const server = require('http').createServer(app)
+const app = express.createServer(credentials)
+const server = require('https').createServer(app)
 const io = require('socket.io').listen(server)
 
 server.listen(9091)
