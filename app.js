@@ -46,9 +46,17 @@ const certificate = fs.readFileSync('../../certs/selfsigned.crt')
 const credentials = {key: privateKey, cert: certificate}
 /**/
 const keys = require('./config/keys')
-const app = express.createServer(credentials)
+const app = express()
 const server = require('https').createServer(app)
 const io = require('socket.io').listen(server)
+
+app.use(function(req,resp,next){
+    if (req.headers['x-forwarded-proto'] === 'https') {
+        return resp.redirect(301, 'http://' + req.headers.host + '/');
+    } else {
+        return next();
+    }
+});
 
 server.listen(9091)
 
