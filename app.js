@@ -41,13 +41,14 @@ const filesRouter = require('./routes/files')
 
 const {createDeliveryController} = require('./controllers/sockets/delivery');
 /**/
-const privateKey = fs.readFileSync('../../certs/selfsigned.key')
-const certificate = fs.readFileSync('../../certs/selfsigned.crt')
-const credentials = {key: privateKey, cert: certificate}
+// const privateKey = fs.readFileSync('../../certs/selfsigned.key')
+// const certificate = fs.readFileSync('../../certs/selfsigned.crt')
+// const credentials = {key: privateKey, cert: certificate}
 /**/
 const keys = require('./config/keys')
 const app = express()
-const server = require('https').createServer(credentials, app)
+//const server = require('https').createServer(credentials, app)
+const server = require('http').createServer(app)
 const io = require('socket.io').listen(server)
 
 // app.use(function(req,resp,next){
@@ -58,7 +59,7 @@ const io = require('socket.io').listen(server)
 //     }
 // });
 
-server.listen(443)
+server.listen(9091)
 
 mongoose.connect(keys.mongoURL, {useNewUrlParser: true, useUnifiedTopology: true, useCreateIndex: true, useFindAndModify: false})
     .then(() => console.log('MongoDB connected.'))
