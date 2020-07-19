@@ -58,7 +58,7 @@ const io = require('socket.io').listen(server)
 //     }
 // });
 
-server.listen(9091)
+server.listen(443)
 
 mongoose.connect(keys.mongoURL, {useNewUrlParser: true, useUnifiedTopology: true, useCreateIndex: true, useFindAndModify: false})
     .then(() => console.log('MongoDB connected.'))
