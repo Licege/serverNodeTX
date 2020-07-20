@@ -1,4 +1,6 @@
 const app = require('./app')
-const port = process.env.PORT || 9090
+const config = require('config')
+// const port = process.env.PORT || 9090
+const PORT = config.get('port') || 9090
 
-app.listen(port, () => console.log(`Server has been started on ${port}`))
+app.listen(PORT, () => console.log(`Server has been started on ${PORT}`))
