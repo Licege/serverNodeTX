@@ -1,0 +1,41 @@
+{
+  "files": {
+    "main.css": "/static/css/main.8d3631b2.chunk.css",
+    "main.js": "/static/js/main.3cc797dc.chunk.js",
+    "main.js.map": "/static/js/main.3cc797dc.chunk.js.map",
+    "runtime-main.js": "/static/js/runtime-main.8cd2bf54.js",
+    "runtime-main.js.map": "/static/js/runtime-main.8cd2bf54.js.map",
+    "static/css/2.89fcc9a3.chunk.css": "/static/css/2.89fcc9a3.chunk.css",
+    "static/js/2.da99cd84.chunk.js": "/static/js/2.da99cd84.chunk.js",
+    "static/js/2.da99cd84.chunk.js.map": "/static/js/2.da99cd84.chunk.js.map",
+    "index.html": "/index.html",
+    "precache-manifest.7a3ef2b0256adfdeda0286fca0d41687.js": "/precache-manifest.7a3ef2b0256adfdeda0286fca0d41687.js",
+    "service-worker.js": "/service-worker.js",
+    "static/css/2.89fcc9a3.chunk.css.map": "/static/css/2.89fcc9a3.chunk.css.map",
+    "static/css/main.8d3631b2.chunk.css.map": "/static/css/main.8d3631b2.chunk.css.map",
+    "static/js/2.da99cd84.chunk.js.LICENSE.txt": "/static/js/2.da99cd84.chunk.js.LICENSE.txt",
+    "static/media/main.scss": "/static/media/packet-delivery.395dd161.jpg",
+    "static/media/address.svg": "/static/media/address.d8450c0b.svg",
+    "static/media/dish.svg": "/static/media/dish.4e9b6bcf.svg",
+    "static/media/fb.svg": "/static/media/fb.51f42ec5.svg",
+    "static/media/gmail.svg": "/static/media/gmail.aa4434ae.svg",
+    "static/media/hours.svg": "/static/media/hours.3593ff3d.svg",
+    "static/media/instagram.svg": "/static/media/instagram.341a67c5.svg",
+    "static/media/logo.png": "/static/media/logo.1ff79a88.png",
+    "static/media/news.jpg": "/static/media/news.6077438c.jpg",
+    "static/media/order_table.png": "/static/media/order_table.9ecf08c4.png",
+    "static/media/phone.svg": "/static/media/phone.989b06d4.svg",
+    "static/media/pointer-map.png": "/static/media/pointer-map.4c451dc8.png",
+    "static/media/slick-theme.css": "/static/media/slick.f97e3bbf.svg",
+    "static/media/tg.svg": "/static/media/tg.4b9f136e.svg",
+    "static/media/tw.svg": "/static/media/tw.9a35c67b.svg",
+    "static/media/vk.svg": "/static/media/vk.2dd796cc.svg"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.8cd2bf54.js",
+    "static/css/2.89fcc9a3.chunk.css",
+    "static/js/2.da99cd84.chunk.js",
+    "static/css/main.8d3631b2.chunk.css",
+    "static/js/main.3cc797dc.chunk.js"
+  ]
+}

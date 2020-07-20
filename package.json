@@ -4,7 +4,8 @@
   "description": "server node ",
   "main": "index.js",
   "scripts": {
-    "start": "node index",
+    "start": "cross-env NODE_ENV=production node index",
+    "dev": "cross-env NODE_ENV=development node index",
     "server": "nodemon index"
   },
   "keywords": [
