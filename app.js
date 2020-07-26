@@ -146,6 +146,9 @@ if (process.env.NODE_ENV === 'production') {
     app.use('/', express.static(path.join(__dirname, 'build')))
 
     app.get('*', (req, res) => {
+        console.log(req.host);
+
+
         if (req.host === 'admin.tri-xolma') {
             res.sendFile(path.resolve(__dirname, 'buildA'))
         } else {
