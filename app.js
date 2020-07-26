@@ -89,6 +89,7 @@ io.on('connection', (socket) => {
         } else {
             socket.emit('event://send-delivery-error', JSON.stringify(order))
         }
+       socket.emit('event://send-delivery:status', JSON.stringify({status: order.status}))
     })
 
     socket.on('disconnect', () => {

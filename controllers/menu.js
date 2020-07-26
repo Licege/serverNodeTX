@@ -71,7 +71,8 @@ module.exports.update = async function (req, res) {
         description: req.body.description,
         weight: req.body.weight,
         cost: req.body.cost,
-        category: req.body.category
+        category: req.body.category,
+        is_delivery: req.body.is_delivery
     }
 
     if (req.file) {
