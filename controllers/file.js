@@ -1,4 +1,4 @@
-const File = require('../models/Files')
+const File = require('../models1/Files')
 const errorHandler = require('../utilus/errorHandler')
 
 module.exports.uploadFile = async function (req, res) {

@@ -1,7 +1,7 @@
 const jwt = require('jsonwebtoken')
 const uuid = require('uuid/v4')
-const Token = require('../models/Token')
-const Admin = require('../models/Admin')
+const Token = require('../models1/Token')
+const Admin = require('../models1/Admin')
 const tokens = require('../config/options').jwt
 const secret = require('../config/keys')
 

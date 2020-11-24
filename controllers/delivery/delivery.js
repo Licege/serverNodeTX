@@ -1,7 +1,7 @@
-const Delivery = require('../../models/delivery/Delivery')
-const Settings = require('../../models/delivery/CommonSettings')
-const GlobalSettings = require('../../models/delivery/GlobalSettings')
-const Dishes = require('../../models/Menu')
+const Delivery = require('../../models1/delivery/Delivery')
+const Settings = require('../../models1/delivery/CommonSettings')
+const GlobalSettings = require('../../models1/delivery/GlobalSettings')
+const Dishes = require('../../models1/Menu')
 const errorHandler = require('../../utilus/errorHandler')
 
 module.exports.getAll = async function (req, res) {

@@ -1,4 +1,4 @@
-const Category = require('../models/Category')
+const Category = require('../models1/Category')
 const errorHandler = require('../utilus/errorHandler')
 
 module.exports.getAll = async function (req, res) {

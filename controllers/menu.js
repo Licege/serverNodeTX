@@ -1,6 +1,6 @@
-const Dish = require('../models/Menu')
-const Category = require('../models/Category')
-const PdfMenu = require('../models/PdfMenu')
+const Dish = require('../models1/Menu')
+const Category = require('../models1/Category')
+const PdfMenu = require('../models1/PdfMenu')
 const errorHandler = require('../utilus/errorHandler')
 
 module.exports.getAll = async function (req, res) {

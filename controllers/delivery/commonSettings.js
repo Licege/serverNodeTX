@@ -1,4 +1,4 @@
-const CommonDelivery = require('../../models/delivery/CommonSettings')
+const CommonDelivery = require('../../models1/delivery/CommonSettings')
 const errorHandler = require('../../utilus/errorHandler')
 
 module.exports.getAll = async function (req, res) {

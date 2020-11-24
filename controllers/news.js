@@ -1,4 +1,4 @@
-const News = require('../models/News')
+const News = require('../models1/News')
 const handleError = require('../utilus/errorHandler')
 
 module.exports.getAll = async function (req, res) {

@@ -1,4 +1,4 @@
-const Admin = require('../models/Admin')
+const Admin = require('../models1/Admin')
 const errorHandler = require('../utilus/errorHandler')
 
 module.exports.getAll = async function (req, res) {

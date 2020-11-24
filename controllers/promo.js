@@ -1,4 +1,4 @@
-const Promos = require('../models/Promo')
+const Promos = require('../models1/Promo')
 const errorHandler = require('../utilus/errorHandler')
 
 module.exports.getAll = async function (req, res) {

@@ -20,7 +20,7 @@ const deliverySchema = new Schema({
         ref: 'restaurant',
         type: Schema.Types.ObjectId
     },
-    user: {
+    user_id: {
         ref: 'users',
         type: Schema.Types.ObjectId
     },

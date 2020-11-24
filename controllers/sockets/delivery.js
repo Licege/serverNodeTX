@@ -1,7 +1,7 @@
-const Dishes = require('../../models/Menu')
-const Delivery = require('../../models/delivery/Delivery')
-const GlobalSettings = require('../../models/delivery/GlobalSettings')
-const Settings = require('../../models/delivery/CommonSettings')
+const Dishes = require('../../models1/Menu')
+const Delivery = require('../../models1/delivery/Delivery')
+const GlobalSettings = require('../../models1/delivery/GlobalSettings')
+const Settings = require('../../models1/delivery/CommonSettings')
 
 module.exports.createDeliveryController = async function (data) {
     try {
@@ -23,7 +23,7 @@ module.exports.createDeliveryController = async function (data) {
             }
         }
 
-        const dishes = await Dishes.find({})
+        const dishes = await Dishes.find()
         let countItem = 0;
         let totalPrice = 0;
         for (let i = 0; i < data.list.length; i++) {
@@ -37,6 +37,7 @@ module.exports.createDeliveryController = async function (data) {
         if (data.total_price !== totalPrice || data.list.length !== countItem) {
             return {status: 400, message: 'Невалидные данные!'};
         }
+        console.log(data);
 
         const result = await new Delivery(data).save()
 

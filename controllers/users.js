@@ -1,4 +1,4 @@
-const User = require('../models/User')
+const User = require('../models1/User')
 const errorHandler = require('../utilus/errorHandler')
 
 module.exports.getAll = async function (req, res) {

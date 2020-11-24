@@ -1,4 +1,4 @@
-const BanquetHall = require('../models/BanquetHall')
+const BanquetHall = require('../models1/BanquetHall')
 const errorHandler = require('../utilus/errorHandler')
 
 module.exports.getAll = async function (req, res) {

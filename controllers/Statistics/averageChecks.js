@@ -1,4 +1,4 @@
-const Delivery = require('../../models/delivery/Delivery')
+const Delivery = require('../../models1/delivery/Delivery')
 const errorHandler = require('../../utilus/errorHandler')
 
 module.exports.get = async function (req, res) {

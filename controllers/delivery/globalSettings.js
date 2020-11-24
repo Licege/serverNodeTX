@@ -1,4 +1,4 @@
-const GlobalSettings = require('../../models/delivery/GlobalSettings')
+const GlobalSettings = require('../../models1/delivery/GlobalSettings')
 const errorHandler = require('../../utilus/errorHandler')
 
 module.exports.get = async function (req, res) {

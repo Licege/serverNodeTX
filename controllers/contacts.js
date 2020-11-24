@@ -1,4 +1,4 @@
-const Contacts = require('../models/Contacts')
+const Contacts = require('../models1/Contacts')
 const handlerError = require('../utilus/errorHandler')
 
 module.exports.get = async function (req, res) {

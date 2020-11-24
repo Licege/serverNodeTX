@@ -1,11 +1,11 @@
 module.exports = {
     jwt: {
         access: {
-            expiresIn: 900,
+            expiresIn: 3600,
             type: 'access'
         },
         refresh: {
-            expiresIn: 3600,
+            expiresIn: 36000,
             type: 'refresh'
         }
     }

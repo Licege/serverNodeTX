@@ -1,4 +1,4 @@
-const Vacancies = require('../models/Vacancy')
+const Vacancies = require('../models1/Vacancy')
 const errorHandler = require('../utilus/errorHandler')
 
 module.exports.getAll = async function (req, res) {

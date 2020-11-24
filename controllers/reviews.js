@@ -1,4 +1,4 @@
-const Reviews = require('../models/Reviews')
+const Reviews = require('../models1/Reviews')
 const errorHandler = require('../utilus/errorHandler')
 
 module.exports.getAll = async function (req, res) {
