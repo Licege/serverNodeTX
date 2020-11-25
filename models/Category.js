@@ -20,7 +20,7 @@ module.exports = (sequelize, DataTypes) => {
   )
 
   Category.associate = models => {
-    Category.hasMany(models.Dish, { foreignKey: 'categoryId' })
+    Category.hasMany(models.Dish, { onDelete: 'CASCADE', foreignKey: 'categoryId' })
   }
 
   return Category

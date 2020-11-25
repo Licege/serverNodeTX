@@ -26,6 +26,7 @@ const files = require('../controllers/file')
 
 const postBanq = require('../postgres/controllers/banquetHall')
 const testDish = require('../postgres/controllers/dish')
+const testCategory = require('../postgres/controllers/categories')
 
 module.exports = () => {
     router
@@ -297,14 +298,17 @@ module.exports = () => {
 
     router.post('/', upload.array('files', 25), files.uploadFile)
 
-    router.get('/api/test', postBanq.getAll)
-    router.get('/api/test/:id', postBanq.get)
-
     router.get('/api/test/dish', testDish.getAll)
     router.get('/api/test/dish/:id', testDish.getById)
     router.post('/api/test/dish', testDish.create)
     router.put('/api/test/dish/:id', testDish.update)
     router.delete('/api/test/dish', testDish.remove)
+
+    router.get('/api/test/category', testCategory.getAll)
+    router.get('/api/test/category/:id', testCategory.get)
+    router.post('/api/test/category', testCategory.create)
+    router.put('/api/test/category', testCategory.update)
+    router.delete('/api/test/category', testCategory.remove)
 
     return router
 }

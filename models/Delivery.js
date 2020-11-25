@@ -39,7 +39,7 @@ module.exports = (sequelize, DataTypes) => {
           defaultValue: 0
         },
         list: {
-          type: DataTypes.JSON,
+          type: DataTypes.JSONB,
           defaultValue: []
         },
         deliveryCost: {
