@@ -44,6 +44,7 @@ module.exports = (sequelize, DataTypes) => {
     User.hasOne(models.Address, { foreignKey: 'addressId'})
     User.hasOne(models.Token, { foreignKey: 'userId' })
     User.hasMany(models.Orders, { foreignKey: 'userId' })
+    User.hasMany(models.Token, { onDelete: 'CASCADE', foreignKey: 'userId' })
   }
 
   return User

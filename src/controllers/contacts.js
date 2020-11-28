@@ -6,7 +6,6 @@ module.exports.get = async function (req, res) {
     try {
         const contacts = await ContactsRepo.one({})
         if (!contacts) return handlerError(res, '', 409)
-        console.log(contacts);
         res.status(200).json(contacts)
     } catch (e) {
         handlerError(res, e)

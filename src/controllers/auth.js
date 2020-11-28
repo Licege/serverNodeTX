@@ -30,7 +30,7 @@ module.exports.login = async function (req, res) {
             })
         }
 
-        const candidate = await UserRepo.one({email: req.body.email})
+        const candidate = await UserRepo.one({ email: req.body.email })
 
         if (candidate) {
             const passwordResult = bcrypt.compareSync(req.body.password, candidate.password)
@@ -48,7 +48,7 @@ module.exports.login = async function (req, res) {
 
                 const token = jwt.sign(tokenBody, keys.jwt, {expiresIn: 3600})*/
 
-                const tokens = await updateTokens(candidate._id)
+                const tokens = await updateTokens(candidate.id)
 
                 res.status(200).json({
                     accessToken: tokens.accessToken,
@@ -66,9 +66,7 @@ module.exports.login = async function (req, res) {
             })
         }
     } catch (e) {
-        res.status(500).json({
-            message: 'Что-то пошло не так, попробуйте снова'
-        })
+        errorHandler(res, e)
     }
 }
 

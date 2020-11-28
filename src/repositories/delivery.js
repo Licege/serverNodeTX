@@ -1,4 +1,4 @@
-const { delivery: DeliveryModel } = require('../models').init()
+const { Delivery: DeliveryModel } = require('../models').init()
 const createBasicMethods = require('../lib/factories/modelFactory')
 
 const Delivery = createBasicMethods(DeliveryModel)

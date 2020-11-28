@@ -1,7 +1,7 @@
 const jwt = require('jsonwebtoken')
 const uuid = require('uuid/v4')
-const Token = require('../../modelsMongo/Token')
-const Admin = require('../../modelsMongo/Admin')
+const { sequelize } = require('../models').init()
+const TokenRepo = require('../repositories/token')
 const tokens = require('../../config/options').jwt
 const secret = require('../../config/keys')
 
@@ -11,12 +11,12 @@ const generateAccessToken = async (userId) => {
         type: tokens.access.type
     }
 
-    const isAdmin = await Admin.findOne({user_id: userId})
-    if (isAdmin) {
-        payload.role = 'admin'
-    }
+    // const isAdmin = await Admin.findOne({user_id: userId})
+    // if (isAdmin) {
+    //     payload.role = 'admin'
+    // }
 
-    return jwt.sign(payload, secret.jwt, {expiresIn: tokens.access.expiresIn})
+    return jwt.sign(payload, secret.jwt, { expiresIn: tokens.access.expiresIn })
 }
 
 const generateRefreshToken = () => {
@@ -27,13 +27,19 @@ const generateRefreshToken = () => {
 
     return {
         id: payload.id,
-        token: jwt.sign(payload, secret.jwt, {expiresIn: tokens.refresh.expiresIn})
+        token: jwt.sign(payload, secret.jwt, { expiresIn: tokens.refresh.expiresIn })
     }
 }
 
 const replaceRefreshToken = async (tokenId, userId) => {
-    await Token.findOneAndRemove({ userId })
-    await Token.create({ tokenId, userId })
+    const transaction = await sequelize.transaction()
+    try {
+        await TokenRepo.destroyById(userId, transaction)
+        await TokenRepo.create({ tokenId, userId }, transaction)
+        await transaction.commit()
+    } catch (e) {
+        await transaction.rollback()
+    }
 }
 
 module.exports = {
