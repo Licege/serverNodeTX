@@ -1,3 +1,3 @@
-const { sequelize } = require('./models').init();
+const { sequelize } = require('./src/models').init();
 
 afterAll(() => sequelize.close());

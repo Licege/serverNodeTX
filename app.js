@@ -3,9 +3,9 @@ const mongoose = require('mongoose')
 const passport = require('passport')
 const bodyParser = require('body-parser')
 const path = require('path')
-const router = require('./routes/routes')
+const router = require('./src/routes/routes')
 
-const { createDeliveryController } = require('./controllers/sockets/delivery');
+const { createDeliveryController } = require('./controllersMongo/sockets/delivery');
 /**/
 // const privateKey = fs.readFileSync('../../certs/selfsigned.key')
 // const certificate = fs.readFileSync('../../certs/selfsigned.crt')
@@ -23,8 +23,8 @@ mongoose.connect(keys.mongoURL, {useNewUrlParser: true, useUnifiedTopology: true
     .catch(error => console.log(error))
 
 app.use(passport.initialize())
-require('./middleware/passport')(passport)
-require('./middleware/adminPassport')(passport)
+require('./src/middleware/passport')(passport)
+require('./src/middleware/adminPassport')(passport)
 
 app.use(require('morgan')('dev'))
 app.use('/uploads', express.static('uploads'))
