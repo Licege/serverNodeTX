@@ -4,7 +4,9 @@ const errorHandler = require('../utilus/errorHandler')
 
 module.exports.getAll = async function (req, res) {
     try {
-        const vacancies = await VacanciesRepo.all({})
+        const vacancies = await VacanciesRepo.all({}, {
+            order: [['updatedAt', 'DESC'], ['createdAt', 'DESC']]
+        })
         res.status(200).json(vacancies)
     } catch (e) {
         errorHandler(res, e)

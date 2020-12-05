@@ -14,8 +14,27 @@ module.exports.getMe = async function(req, res) {
 
 module.exports.getMyOrders = async function(req, res) {
     try {
+        const attributes = [
+            'id',
+            'name',
+            'email',
+            'phone',
+            'address',
+            'deliveryCost',
+            'deliveryType',
+            'paymentStatus',
+            'paymentType',
+            'sale',
+            'price',
+            'createdAt'
+        ]
+
         const where = { userId: req.user }
-        const deliveryOrders = await DeliveryRepo.all(where)
+        const deliveryOrders = await DeliveryRepo.all(where, {
+            attributes,
+            order: [['createdAt', 'DESC']]
+        })
+
         res.status(200).json(deliveryOrders)
     } catch (e) {
         errorHandler(res, e)

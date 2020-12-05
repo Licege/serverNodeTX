@@ -6,16 +6,16 @@ module.exports.getAll = async function (req, res) {
     try {
         const where = {}
 
-        if (req.query.createAtStart) {
-            where.createAt = {
-                $gte: req.query.createAtStart
+        if (req.query.createdAtStart) {
+            where.createdAt = {
+                $gte: req.query.createdAtStart
             }
         }
-        if (req.query.createAtEnd) {
+        if (req.query.createdAtEnd) {
             if (!req.query.createAtStart) {
-                where.createAt = {}
+                where.createdAt = {}
             }
-            where.createAt[$lte] = req.query.createAtEnd
+            where.createdAt[$lte] = req.query.createdAtEnd
         }
         if (req.query.status) {
             where.status = req.query.status
@@ -33,8 +33,9 @@ module.exports.getAll = async function (req, res) {
 
         const reviews = await ReviewsRepo.all(where, {
             include,
-            limit: +req.query.limit,
-            offset: +req.query.offset
+            limit: +req.query.limit || 0,
+            offset: +req.query.offset || 0,
+            order: [['updatedAt', 'DESC'], ['createdAt', 'DESC']]
         })
 
         res.status(200).json(reviews)

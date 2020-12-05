@@ -24,7 +24,7 @@ module.exports = {
         type: Sequelize.STRING
       },
       oddMoney: {
-        type: Sequelize.STRING
+        type: Sequelize.INTEGER
       },
       timeDelivery: {
         type: Sequelize.DATE

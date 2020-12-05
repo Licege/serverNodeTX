@@ -42,9 +42,11 @@ module.exports = (sequelize, DataTypes) => {
 
   User.associate = models => {
     User.hasOne(models.Address, { foreignKey: 'addressId'})
-    User.hasOne(models.Token, { foreignKey: 'userId' })
+    User.hasOne(models.Review, { onDelete: 'CASCADE', foreignKey: 'userId' })
     User.hasMany(models.Orders, { foreignKey: 'userId' })
     User.hasMany(models.Token, { onDelete: 'CASCADE', foreignKey: 'userId' })
+    User.hasMany(models.Orders, { onDelete: 'CASCADE', foreignKey: 'userId' })
+    User.hasMany(models.Delivery, { onDelete: 'CASCADE', foreignKey: 'userId' })
   }
 
   return User

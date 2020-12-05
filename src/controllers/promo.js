@@ -58,10 +58,12 @@ module.exports.update = async function (req, res) {
         promoToupdate.imageSrc = req.file
     }
 
-    const where = { id: req.params.id }
+    const id = req.params.id
+    const where = { id }
     try {
-        const promo = await PromosRepo.update(where, promoToupdate, transaction)
+        await PromosRepo.update(where, promoToupdate, transaction)
         await transaction.commit()
+        const promo = await PromosRepo.findById(id);
         res.status(200).json(promo)
     } catch (e) {
         await transaction.rollback()

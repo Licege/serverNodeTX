@@ -11,6 +11,9 @@ migrate-undo:
 	env $(VARIABLES) DB_NAME=trixolma sequelize db:migrate:undo
 
 seed-run:
+	env $(VARIABLES) DB_NAME=trixolma sequelize db:seed
+
+seed-run-all:
 	env $(VARIABLES) DB_NAME=trixolma sequelize db:seed:all
 
 seed-undo:

@@ -1,22 +1,22 @@
 module.exports = Model => ({
     bulkCreate: async (values, transaction) => {
-        const collections = await Model.bulkCreate(values, { transaction, returning: true });
-        return collections.map(collection => collection.get({ plain: true }));
+        const collections = await Model.bulkCreate(values, { transaction, returning: true })
+        return collections.map(collection => collection.get({ plain: true }))
     },
 
     create: async (values, transaction) => {
-        const newObj = await Model.create(values, { transaction, returning: true });
-        return newObj.get({ plain: true });
+        const newObj = await Model.create(values, { transaction, returning: true })
+        return newObj.get({ plain: true })
     },
 
     update: async (where, values, transaction) => {
-        await Model.update(values, { where, transaction, limit: 1 });
-        return undefined;
+        await Model.update(values, { where, transaction, limit: 1 })
+        return undefined
     },
 
     updateAll: async (where, values, transaction) => {
-        await Model.update(values, { where, transaction });
-        return undefined;
+        await Model.update(values, { where, transaction })
+        return undefined
     },
 
     findById: async (id, { transaction = null, attributes = null, paranoid = true } = {}) =>
@@ -64,10 +64,10 @@ module.exports = Model => ({
             }),
 
     oneAttrId: async (where, transaction) => {
-        const data = await Model.findOne({ where, attributes: ['id'], transaction });
+        const data = await Model.findOne({ where, attributes: ['id'], transaction })
 
-        if (!data) return null;
-        return data.id;
+        if (!data) return null
+        return data.id
     },
 
     allAttrId: async (where, transaction) => {
@@ -78,20 +78,20 @@ module.exports = Model => ({
             raw: true
         });
 
-        return colections.map(data => data.id);
+        return colections.map(data => data.id)
     },
 
     oneAttr: async (attr, where, transaction) => {
-        const data = await Model.findOne({ where, attributes: [attr], transaction });
+        const data = await Model.findOne({ where, attributes: [attr], transaction })
 
-        if (!data) return null;
-        return data[attr];
+        if (!data) return null
+        return data[attr]
     },
 
     allAttr: async (attr, where, transaction) => {
-        const colections = await Model.findAll({ where, attributes: [attr], transaction });
+        const colections = await Model.findAll({ where, attributes: [attr], transaction })
 
-        return colections.map(data => data[attr]);
+        return colections.map(data => data[attr])
     },
 
     allAttrUnique: async (attr, where, transaction) => {
@@ -101,8 +101,8 @@ module.exports = Model => ({
             attributes: [attr],
             transaction,
             raw: true
-        });
-        return groupedValues.map(value => value[attr]);
+        })
+        return groupedValues.map(value => value[attr])
     },
 
     totalUniqueAttr: async (attr, where, transaction) => {
@@ -112,8 +112,8 @@ module.exports = Model => ({
             attributes: [attr],
             transaction,
             raw: true
-        });
-        return groupedValues.length;
+        })
+        return groupedValues.length
     },
 
     destroy: async (where, transaction, force = false) => await Model.destroy({ where, transaction, force }),
@@ -128,12 +128,12 @@ module.exports = Model => ({
         await Model.count({ where, transaction, include }),
 
     toggleAttr: async (attr, where, transaction) => {
-        const data = await Model.findOne({ where, attributes: [attr], transaction });
+        const data = await Model.findOne({ where, attributes: [attr], transaction })
 
-        if (!data) return null;
-        const value = data[attr];
+        if (!data) return null
+        const value = data[attr]
 
-        await Model.update({ [attr]: !value }, { where, transaction });
-        return !value;
+        await Model.update({ [attr]: !value }, { where, transaction })
+        return !value
     }
 });

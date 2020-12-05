@@ -25,7 +25,7 @@ module.exports.getById = async function (req, res) {
 }
 
 module.exports.create = async function (req, res) {
-    const transaction = await sequelize.transaction
+    const transaction = await sequelize.transaction()
     const newsToAdd = {
         title: req.body.title,
         description: req.body.description,
@@ -33,8 +33,9 @@ module.exports.create = async function (req, res) {
         imageSrc: req.file ? req.file.path : ''
     }
 
+
     try {
-        const news = NewsRepo.create(newsToAdd, transaction)
+        const news = await NewsRepo.create(newsToAdd, transaction)
         await transaction.commit()
         res.status(201).json(news)
     } catch (e) {
@@ -55,11 +56,13 @@ module.exports.update = async function (req, res) {
         newsToUpdate.imageSrc = req.file.path
     }
 
-    const where = { id: req.params.id }
+    const id = req.params.id
+    const where = { id }
 
     try {
-        const news = await NewsRepo.update(where, newsToUpdate, transaction)
+        await NewsRepo.update(where, newsToUpdate, transaction)
         await transaction.commit()
+        const news = await NewsRepo.findById(id)
         res.status(200).json(news)
     } catch (e) {
         await transaction.rollback()

@@ -5,7 +5,7 @@ const bodyParser = require('body-parser')
 const path = require('path')
 const router = require('./src/routes/routes')
 
-const { createDeliveryController } = require('./controllersMongo/sockets/delivery');
+const { createDeliveryController } = require('./src/controllers/sockets/delivery');
 /**/
 // const privateKey = fs.readFileSync('../../certs/selfsigned.key')
 // const certificate = fs.readFileSync('../../certs/selfsigned.crt')

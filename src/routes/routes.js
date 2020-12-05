@@ -73,7 +73,7 @@ module.exports = () => {
             session: false,
             failWithError: true
         }), menu.getAll, adminAuthFailed)
-        .get('/api/private/menu/:id', passport.authenticate('admin-jwt', {
+        .get('/api/private/menu/:category', passport.authenticate('admin-jwt', {
             session: false,
             failWithError: true
         }), menu.getByCategory, adminAuthFailed)
@@ -263,7 +263,7 @@ module.exports = () => {
 
     router
         .get('/api/public/menu', menu.getAll)
-        .get('/api/public/menu/:id', menu.getByCategory)
+        .get('/api/public/menu/:category', menu.getByCategory)
         .get('/api/public/menu/dish/:id', menu.getById)
 
     router

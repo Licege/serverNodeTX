@@ -5,14 +5,13 @@ const GlobalSettingsRepo = require('../../repositories/deliveryGlobalSettings')
 const SettingsRepo = require('../../repositories/deliveryCommonSettings')
 
 module.exports.createDeliveryController = async function (data) {
-    const transaction = sequelize.transaction()
+    const transaction = await sequelize.transaction()
 
     try {
-        //валидация
         const globalSettings = await GlobalSettingsRepo.one({})
 
         if (data.deliveryType === 'home') {
-            const settings = await SettingsRepo.one({city: data.address.city})
+            const settings = await SettingsRepo.one({ city: data.address.city })
             if (!settings) {
                 return {status: 400, message: 'Невалидные данные!'};
             } else if (settings.freeDelivery > data.totalPrice && settings.priceForDelivery !== data.deliveryCost) {
@@ -26,7 +25,7 @@ module.exports.createDeliveryController = async function (data) {
             }
         }
 
-        const ids = data.list.map(({ id }) => id)
+        const ids = data.list.map(({ dishId }) => dishId)
         const where = { id: ids }
         const dishes = await DishRepo.all(where)
         let countItem = 0;
@@ -43,7 +42,33 @@ module.exports.createDeliveryController = async function (data) {
             return {status: 400, message: 'Невалидные данные!'};
         }
 
-        const result = await DeliveryRepo.create(data, transaction)
+        const { email, name, phone, oddMoney = 0, timeDelivery, countPerson = 1, address,
+        comment = '', list, deliveryCost, sale, totalPrice: price, deliveryType, paymentType, createdAt, updatedAt, userId
+        } = data
+
+        const orderToAdd = {
+            name,
+            phone,
+            email,
+            paymentType,
+            deliveryType,
+            address,
+            oddMoney,
+            timeDelivery,
+            countPerson,
+            comment,
+            paymentStatus: 0,
+            status: 0,
+            list,
+            deliveryCost,
+            sale,
+            price,
+            createdAt,
+            updatedAt,
+            userId
+        }
+
+        const result = await DeliveryRepo.create(orderToAdd, transaction)
         await transaction.commit()
         return {status: 201, data: result}
     } catch (e) {

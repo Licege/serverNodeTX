@@ -14,7 +14,6 @@ module.exports = (sequelize, DataTypes) => {
 
   Address.associate = models => {
     Address.belongsTo(models.User, { foreignKey: 'id', targetKey: 'addressId' })
-    Address.belongsTo(models.Delivery, { foreignKey: 'id', targetKey: 'addressId' })
     Address.belongsTo(models.Restaurant, { foreignKey: 'id', targetKey: 'addressId' })
   }
 

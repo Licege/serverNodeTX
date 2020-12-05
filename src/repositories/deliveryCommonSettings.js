@@ -1,4 +1,4 @@
-const { CommonDelivery: CommonDeliveryModel } = require('../models').init()
+const { CommonSettings: CommonDeliveryModel } = require('../models').init()
 const createBasicMethods = require('../lib/factories/modelFactory')
 
 const CommonDelivery = createBasicMethods(CommonDeliveryModel)

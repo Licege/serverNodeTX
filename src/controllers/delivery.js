@@ -9,16 +9,16 @@ module.exports.getAll = async function (req, res) {
     if (req.query.phone) {
         where.phone = { $regex: '.*' + req.query.phone + '.*' }
     }
-    if (req.query.createAtStart) {
-        where.createAt = {
-            $gte: req.query.create_at_start
+    if (req.query.createdAtStart) {
+        where.createdAt = {
+            $gte: req.query.createdAtStart
         }
     }
-    if (req.query.createAtEnd) {
-        if (!where.createAt) {
-            where.createAt = {}
+    if (req.query.createdAtEnd) {
+        if (!where.createdAt) {
+            where.createdAt = {}
         }
-        where.createAt['$lte'] = req.query.createAtEnd
+        where.createdAt['$lte'] = req.query.createdAtEnd
     }
     if (req.query.totalPriceStart) {
         where.totalPrice = {
@@ -62,6 +62,7 @@ module.exports.getAll = async function (req, res) {
         const deliveriesData = await Delivery.findAndCountAll({
             where,
             limit: 5,
+            order: [['updatedAt', 'DESC'], ['createdAt', 'DESC']],
             raw: true
         })
         const deliveries = deliveriesData.rows

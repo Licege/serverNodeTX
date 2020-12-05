@@ -4,7 +4,7 @@ const errorHandler = require('../utilus/errorHandler')
 
 module.exports.getAll = async function (req, res) {
     try {
-        const settings = await CommonDeliveryRepo.all()
+        const settings = await CommonDeliveryRepo.all({})
         res.status(200).json(settings)
     } catch (e) {
         errorHandler(res, e)
@@ -38,8 +38,10 @@ module.exports.update = async function (req, res) {
 
     try {
         const where = { id: req.params.id }
-        const settings = await CommonDeliveryRepo.update(where, req.body, transaction)
+        await CommonDeliveryRepo.update(where, req.body, transaction)
         await transaction.commit()
+
+        const settings = await CommonDeliveryRepo.findById(req.params.id)
         res.status(200).json(settings)
     } catch (e) {
         await transaction.rollback()

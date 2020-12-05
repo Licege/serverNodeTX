@@ -1,4 +1,4 @@
-const { GlobalDelivery: GlobalDeliveryModel } = require('../models').init()
+const { GlobalSettings: GlobalDeliveryModel } = require('../models').init()
 const createBasicMethods = require('../lib/factories/modelFactory')
 
 const GlobalDelivery = createBasicMethods(GlobalDeliveryModel)

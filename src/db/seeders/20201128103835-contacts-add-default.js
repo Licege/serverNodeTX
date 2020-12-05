@@ -2,7 +2,7 @@
 
 module.exports = {
   up: async (queryInterface, Sequelize) => {
-    queryInterface.bulkInsert('Contacts', [{
+    await queryInterface.bulkInsert('Contacts', [{
       vk: 'https://vk.com/trixolma',
       fb: '',
       tg: '',
@@ -18,6 +18,6 @@ module.exports = {
   },
 
   down: async (queryInterface, Sequelize) => {
-    queryInterface.bulkDelete('Contacts', null, {})
+    await queryInterface.bulkDelete('Contacts', null, {})
   }
 };

@@ -16,5 +16,9 @@ module.exports = (sequelize, DataTypes) => {
       }
   )
 
+  Review.associate = models => {
+      Review.belongsTo(models.User, { foreignKey: 'userId', targetKey: 'id' })
+  }
+
   return Review
 }

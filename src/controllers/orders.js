@@ -16,19 +16,21 @@ module.exports.getAll = async function (req, res) {
         }
         where.orderDate[$lte] = req.query.orderDateEnd
     }
-    if (req.query.createAtStart) {
-        where.create_at = {
-            $gte: req.query.createAtStart
+    if (req.query.createdAtStart) {
+        where.createdAt = {
+            $gte: req.query.createdAtStart
         }
     }
-    if (req.query.createAtEnd) {
-        if (!req.query.createAtStart) {
-            where.createAt = {}
+    if (req.query.createdAtEnd) {
+        if (!req.query.createdAtStart) {
+            where.createdAt = {}
         }
-        where.createAt[$lte] = req.query.createAtEnd
+        where.createdAt[$lte] = req.query.createdAtEnd
     }
     try {
-        const orders = await OrdersRepo.all(where)
+        const orders = await OrdersRepo.all(where, {
+            order: [['updatedAt', 'DESC'], ['createdAt', 'DESC']]
+        })
         res.status(200).json(orders)
     } catch (e) {
         errorHandler(res, e)

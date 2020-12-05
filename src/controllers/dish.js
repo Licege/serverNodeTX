@@ -1,4 +1,4 @@
-const { sequelize } = require('../models').init()
+const { sequelize, Category } = require('../models').init()
 const DishRepo = require('../repositories/dish')
 const errorHandler = require('../utilus/errorHandler')
 
@@ -18,7 +18,16 @@ module.exports.getAll = async function (req, res) {
 
 module.exports.getByCategory = async function (req, res) {
     try {
-        const dishes = await DishRepo.all({ categoryId: req.params.id })
+        const where = { titleEn: req.params.category }
+        const include = [
+            {
+                model: Category,
+                attributes: [],
+                where
+
+            }
+        ]
+        const dishes = await DishRepo.all({}, { include })
         res.status(200).json(dishes)
     } catch (e) {
         errorHandler(res, e)
@@ -88,8 +97,9 @@ module.exports.update = async function (req, res) {
 
     const transaction = await sequelize.transaction()
     try {
-        const dish = await DishRepo.update(where, updatedData, transaction)
+        await DishRepo.update(where, updatedData, transaction)
         await transaction.commit()
+        const dish = await DishRepo.findById(req.params.id)
         res.status(200).json(dish)
     } catch (e) {
         await transaction.rollback()

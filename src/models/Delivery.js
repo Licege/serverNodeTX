@@ -26,7 +26,11 @@ module.exports = (sequelize, DataTypes) => {
         },
         oddMoney: DataTypes.STRING,
         timeDelivery: DataTypes.DATE,
-        countPerson: DataTypes.INTEGER,
+        countPerson: {
+            type: DataTypes.INTEGER,
+            allowNull: false,
+            defaultValue: 1
+        },
         comment: DataTypes.TEXT,
         status: {
           type: DataTypes.INTEGER,
@@ -54,12 +58,22 @@ module.exports = (sequelize, DataTypes) => {
           type: DataTypes.INTEGER,
           defaultValue: 0
         },
-        addressId: DataTypes.INTEGER
+        address: {
+            type: DataTypes.JSONB,
+            defaultValue: {
+                city: '',
+                street: '',
+                house: '',
+                flat: '',
+                floor: '',
+                intercom: ''
+            }
+        }
       }
   )
 
   Delivery.associate = models => {
-    Delivery.hasOne(models.Address, { foreignKey: 'addressId', targetKey: 'id' })
+    Delivery.belongsTo(models.User, { foreignKey: 'userId', targetKey: 'id' })
   }
 
   return Delivery
