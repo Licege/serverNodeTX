@@ -13,6 +13,6 @@ module.exports = {
   },
 
   down: async (queryInterface, Sequelize) => {
-    await queryInterface.bulkDelete('GlobalSetiings', null, {})
+    await queryInterface.bulkDelete('GlobalSettings', null, {})
   }
 };

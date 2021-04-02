@@ -11,7 +11,6 @@ module.exports = passport => {
     passport.use('admin-jwt',
         new JwtStrategy(options, async (payload, done) => {
             try {
-                // if (payload.role === 'admin') {
                 if (payload.userId === +process.env.ADMIN_ID) {
                     done(null, payload.userId)
                 } else {

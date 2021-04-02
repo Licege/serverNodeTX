@@ -11,6 +11,6 @@ module.exports = {
   },
 
   down: async (queryInterface, Sequelize) => {
-    await queryInterface.bulkInsert('CommonSettings', null, {})
+    await queryInterface.bulkDelete('CommonSettings', { city: 'Калининград' }, {})
   }
 };

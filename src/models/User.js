@@ -47,6 +47,7 @@ module.exports = (sequelize, DataTypes) => {
     User.hasMany(models.Token, { onDelete: 'CASCADE', foreignKey: 'userId' })
     User.hasMany(models.Orders, { onDelete: 'CASCADE', foreignKey: 'userId' })
     User.hasMany(models.Delivery, { onDelete: 'CASCADE', foreignKey: 'userId' })
+    User.hasMany(models.Complain, { foreignKey: 'userId' })
   }
 
   return User

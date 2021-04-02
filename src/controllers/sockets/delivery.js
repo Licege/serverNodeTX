@@ -8,6 +8,7 @@ module.exports.createDeliveryController = async function (data) {
     const transaction = await sequelize.transaction()
 
     try {
+        console.log(data);
         const globalSettings = await GlobalSettingsRepo.one({})
 
         if (data.deliveryType === 'home') {
