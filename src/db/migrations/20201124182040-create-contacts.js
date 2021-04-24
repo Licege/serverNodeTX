@@ -32,6 +32,11 @@ module.exports = {
       address: {
         type: Sequelize.STRING
       },
+      openHours: {
+        type: Sequelize.ARRAY(Sequelize.STRING),
+        allowNull: false,
+        defaultValue: []
+      },
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE

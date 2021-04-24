@@ -5,7 +5,7 @@ const handlerError = require('../utilus/errorHandler')
 module.exports.get = async function (req, res) {
     try {
         const contacts = await ContactsRepo.one({})
-        if (!contacts) return handlerError(res, '', 409)
+        if (!contacts) return handlerError(res, 'Контакты пусты', 409)
         res.status(200).json(contacts)
     } catch (e) {
         handlerError(res, e)

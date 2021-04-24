@@ -1,5 +1,5 @@
 const jwt = require('jsonwebtoken')
-const uuid = require('uuid/v4')
+const { v4 } = require('uuid')
 const { sequelize } = require('../models').init()
 const TokenRepo = require('../repositories/token')
 const tokens = require('../../config/options').jwt
@@ -21,7 +21,7 @@ const generateAccessToken = async (userId) => {
 
 const generateRefreshToken = () => {
     const payload = {
-        id: uuid(),
+        id: v4(),
         type: tokens.refresh.type
     }
 

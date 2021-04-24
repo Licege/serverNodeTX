@@ -8,6 +8,9 @@ module.exports = {
         primaryKey: true,
         type: Sequelize.INTEGER
       },
+      userId: {
+        type: Sequelize.INTEGER
+      },
       name: {
         type: Sequelize.STRING
       },
@@ -22,9 +25,6 @@ module.exports = {
       },
       deliveryType: {
         type: Sequelize.STRING
-      },
-      oddMoney: {
-        type: Sequelize.INTEGER
       },
       timeDelivery: {
         type: Sequelize.DATE
@@ -42,7 +42,8 @@ module.exports = {
         type: Sequelize.INTEGER
       },
       list: {
-        type: Sequelize.JSON
+        type: Sequelize.JSONB,
+        defaultValue: []
       },
       deliveryCost: {
         type: Sequelize.INTEGER
@@ -53,8 +54,21 @@ module.exports = {
       price: {
         type: Sequelize.INTEGER
       },
-      addressId: {
-        type: Sequelize.INTEGER
+      oddMoney: {
+        type: Sequelize.INTEGER,
+        allowNull: true,
+        defaultValue: 0
+      },
+      address: {
+        type: Sequelize.JSONB,
+        defaultValue: {
+          city: '',
+          street: '',
+          house: '',
+          flat: '',
+          floor: '',
+          intercom: ''
+        }
       },
       deletedAt: {
         type: Sequelize.DATE

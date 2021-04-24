@@ -10,6 +10,10 @@ module.exports = {
       tokenId: {
         type: Sequelize.STRING
       },
+      userId: {
+        type: Sequelize.INTEGER,
+        allowNull: false
+      },
       role: {
         type: Sequelize.STRING
       },

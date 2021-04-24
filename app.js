@@ -14,7 +14,12 @@ const { createDeliveryController } = require('./src/controllers/sockets/delivery
 const keys = require('./config/keys')
 const app = express()
 const server = require('http').createServer(app)
-const io = require('socket.io').listen(server)
+const io = require('socket.io')(server, {
+  cors: {
+    origin: 'http://localhost:3000',
+    methods: ['GET', 'POST']
+  }
+})
 
 server.listen(9091)
 

@@ -138,11 +138,50 @@ module.exports.getById = async function (req, res) {
 // }
 
 module.exports.update = async function (req, res) {
-    const transaction = await sequelize.transaction()
-
     try {
-        const where = { id: req.params.id }
-        const delivery = await DeliveryRepo.update(where, req.body, transaction)
+        const { id } = req.params
+        const {
+            address,
+            comment,
+            countPerson,
+            deliveryCost,
+            deliveryType,
+            email,
+            list,
+            name,
+            paymentStatus,
+            paymentType,
+            oddMoney,
+            phone,
+            price,
+            sale,
+            status,
+            timeDelivery,
+            userId
+        } = req.body
+
+        const newDeliveryOrder = {
+            address,
+            comment,
+            countPerson,
+            deliveryCost,
+            deliveryType,
+            email,
+            list,
+            name,
+            paymentStatus,
+            paymentType,
+            oddMoney,
+            phone,
+            price,
+            sale,
+            status,
+            timeDelivery,
+            userId
+        }
+
+        await DeliveryRepo.update({ id }, newDeliveryOrder)
+        const delivery = await DeliveryRepo.findById(id)
         res.status(200).json(delivery)
     } catch (e) {
         errorHandler(res,  e)

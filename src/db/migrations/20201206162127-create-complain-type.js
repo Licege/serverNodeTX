@@ -7,13 +7,6 @@ module.exports = {
         primaryKey: true,
         type: Sequelize.INTEGER
       },
-      typeId: {
-        type: Sequelize.INTEGER,
-        references: {
-          model: 'ComplainTypes',
-          key: 'id'
-        }
-      },
       title: {
         type: Sequelize.STRING,
         allowNull: false,

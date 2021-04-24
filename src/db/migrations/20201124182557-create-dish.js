@@ -8,6 +8,14 @@ module.exports = {
         primaryKey: true,
         type: Sequelize.INTEGER
       },
+      categoryId: {
+        type: Sequelize.INTEGER,
+        allowNull: false,
+        references: {
+          model: 'Categories',
+          key: 'id'
+        }
+      },
       title: {
         type: Sequelize.STRING,
         allowNull: false
@@ -29,6 +37,11 @@ module.exports = {
         allowNull: false,
         defaultValue: true
       },
+      isShow: {
+        type: Sequelize.BOOLEAN,
+        allowNull: false,
+        defaultValue: true
+      },
       imageSrc: {
         type: Sequelize.STRING
       },
@@ -39,14 +52,6 @@ module.exports = {
       updatedAt: {
         allowNull: false,
         type: Sequelize.DATE
-      },
-      categoryId: {
-        type: Sequelize.INTEGER,
-        allowNull: false,
-        references: {
-          model: 'Categories',
-          key: 'id'
-        }
       }
     });
   },

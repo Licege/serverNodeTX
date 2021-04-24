@@ -1,7 +1,7 @@
 const bcrypt = require('bcryptjs')
 const jwt = require('jsonwebtoken')
 const { validationResult } = require('express-validator')
-const { sequelize } = require('../models').init()
+const { sequelize, User } = require('../models').init()
 const UserRepo = require('../repositories/user')
 const TokenRepo = require('../repositories/token')
 const keys = require('../../config/keys')
