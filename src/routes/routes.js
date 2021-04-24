@@ -26,7 +26,7 @@ const complain = require('../controllers/complain');
 const complainType = require('../controllers/complainType');
 // const files = require('../../controllersMongo/file')
 
-module.exports = () => {
+module.exports = io => {
   // router
   //     .get('/api/private/admin', passport.authenticate('admin-jwt', {
   //         session: false,
@@ -275,7 +275,7 @@ module.exports = () => {
   router.post('/api/public/orders', orders.create);
 
   router
-    .get('/api/public/me', passport.authenticate('simple-jwt', {session: false}), profile.getMe)
+    .get('/api/public/me', profile.getMe)
     .get('/api/public/me/orders', passport.authenticate('simple-jwt', {session: false}), profile.getMyOrders)
     .put('/api/public/me', passport.authenticate('simple-jwt', {session: false}), profile.updateMe);
 
