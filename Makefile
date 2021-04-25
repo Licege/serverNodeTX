@@ -1,8 +1,11 @@
 DEFAULT=./.env
 VARIABLES=`cat $(DEFAULT) | xargs`
 
-start:
-	env $(VARIABLES) PORT=9090 DEBUG=app:error npm run start
+start-service:
+	env $(VARIABLES) PORT=9090 npm run start
+
+start-auth:
+	env $(VARIABLES) PORT=9092 DEFAULT_EXECUTION_MODE=authorization npm run start
 
 migrate-run:
 	env $(VARIABLES) DB_NAME=trixolma sequelize db:migrate

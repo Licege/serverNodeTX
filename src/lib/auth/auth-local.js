@@ -31,6 +31,12 @@ const authLocal = async (req, email, password, done) => {
     }
     const plainUser = user
     delete plainUser.password
+    plainUser.entity = {
+      id: user.id,
+      forename: user.forename,
+      surname: user.surname,
+      type: 'User'
+    }
     return done(null, plainUser)
   } catch (err) {
     return done(err)

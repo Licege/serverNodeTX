@@ -247,13 +247,13 @@ module.exports = io => {
   router.get('/api/public/delivery-settings/global', globalDeliverySettings.get);
 
   router
-    .post('/api/public/auth/login',
-      [
-        check('email', 'Некорректный email').isEmail(),
-        check('password', 'Минимальная длина пароля 8 символов')
-          .isLength({min: 8})
-      ],
-      auth.login)
+  //   .post('/api/public/auth/login',
+  //     [
+  //       check('email', 'Некорректный email').isEmail(),
+  //       check('password', 'Минимальная длина пароля 8 символов')
+  //         .isLength({min: 8})
+  //     ],
+  //     auth.login)
     .post('/api/public/auth/registration', auth.register)
     .post('/api/public/auth/refresh-token', auth.refreshTokens);
 
