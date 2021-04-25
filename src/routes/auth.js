@@ -10,14 +10,9 @@ const rateLimit = new RateLimit({
 
 module.exports = () => {
   router
-    .post('/auth/login', rateLimit, passport.authenticate('user-strategy'), (req, res) => {
-      console.log(req.session);
-      console.log(req.isAuthenticated());
-      res.json({success: true})
-    })
-    // .post('/api/public/auth/login', rateLimit, passport.authenticate('user-strategy'), auth.login)
-    .post('/auth/registration', auth.register)
-    .post('/tst', auth.tst)
+    .post('/api/auth/login', rateLimit, passport.authenticate('user-strategy'), auth.login)
+    .use('/api/auth/logout', auth.logout)
+    .post('/api/auth/registration', auth.register)
 
   return router;
 }

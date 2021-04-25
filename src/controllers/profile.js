@@ -5,7 +5,7 @@ const errorHandler = require('../utilus/errorHandler')
 
 module.exports.getMe = async function(req, res) {
     try {
-        const me = await UserRepo.findById(req.user)
+        const me = await UserRepo.findById(req.user.id)
         res.status(200).json(me)
     } catch (e) {
         errorHandler(res, e)
@@ -29,7 +29,8 @@ module.exports.getMyOrders = async function(req, res) {
             'createdAt'
         ]
 
-        const where = { userId: req.user }
+        console.log('userId:', req.user.id);
+        const where = { userId: req.user.id }
         const deliveryOrders = await DeliveryRepo.all(where, {
             attributes,
             order: [['createdAt', 'DESC']]

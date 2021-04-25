@@ -19,55 +19,18 @@ const updateTokens = async (userId) => {
     }
 }
 
-module.exports.login = async function (req, res) {
-    try {
-        const errors = validationResult(req)
+module.exports.login = async (req, res) => {
+    res.json({ success: true })
+}
 
-        if (!errors.isEmpty()) {
-            return res.status(400).json({
-                errors: errors.array(),
-                message: 'Некорректные данные'
-            })
-        }
-
-        const candidate = await UserRepo.one({ email: req.body.email })
-
-        if (candidate) {
-            const passwordResult = bcrypt.compareSync(req.body.password, candidate.password)
-            if (passwordResult) {
-
-                /*const tokenBody = {
-                    email: candidate.email,
-                    userId: candidate._id
-                }
-
-                const isAdmin = await Admin.findOne({user_id: candidate._id})
-                if (isAdmin) {
-                    tokenBody.role = 'admin'
-                }
-
-                const token = jwt.sign(tokenBody, keys.jwt, {expiresIn: 3600})*/
-
-                const tokens = await updateTokens(candidate.id)
-
-                res.status(200).json({
-                    accessToken: tokens.accessToken,
-                    refreshToken: tokens.refreshToken,
-                    profile: candidate
-                })
-            } else {
-                res.status(401).json({
-                    message: 'Неверный пароль. Попробуйте снова.'
-                })
-            }
-        } else {
-            res.status(404).json({
-                message: 'Пользователь с таким email не найден.'
-            })
-        }
-    } catch (e) {
-        errorHandler(res, e)
-    }
+module.exports.logout = async (req, res) => {
+    req.logout()
+    // res.redirect('/')
+    // req.logOut()
+    // req.session.destroy(() => {
+    //     res.clearCookie(process.env.TRIXOLMA_SID)
+    //     res.redirect('/')
+    // })
 }
 
 module.exports.refreshTokens = async function (req, res) {
@@ -89,15 +52,6 @@ module.exports.refreshTokens = async function (req, res) {
         res.json(newToken)
     } catch (e) {
         errorHandler(res, e)
-    }
-}
-
-module.exports.tst = async (req, res) => {
-    try {
-        console.log('1');
-        res.json({})
-    } catch (e) {
-        console.log(e);
     }
 }
 

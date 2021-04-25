@@ -63,16 +63,19 @@ const start = () => {
     ),
   )
 
+  app.use((req, res, next) => {
+    res.setHeader('Surrogate-Control', 'no-store');
+    res.setHeader('Cache-Control', 'no-store, no-cache, must-revalidate, proxy-revalidate');
+    res.setHeader('Pragma', 'no-cache');
+    res.setHeader('Expires', '0');
+    next();
+  });
+
   const session = sessionMiddleware({ rolling: true })
 
   app.use(session)
   app.use(passport.initialize())
   app.use(passport.session())
-  app.use((req, res, next ) => {
-    console.log('session' + JSON.stringify(req.session));
-    console.log('user' + req.user);
-    next();
-  });
 
   // const io = require('socket.io')(socketServer, {
   //   cors: {

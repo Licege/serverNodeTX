@@ -42,196 +42,81 @@ module.exports = io => {
   //     }), admin.remove, adminAuthFailed)
 
   router
-    .post('/api/private/auth/login',
-      [
-        check('email', 'Некорректный email').isEmail(),
-        check('password', 'Минимальная длина пароля 8 символов')
-          .isLength({min: 8})
-      ],
-      auth.login)
-    .post('/api/private/auth/registration', auth.register)
-    .post('/api/private/auth/refresh-token', auth.refreshTokens);
-
-  router
     .get('/api/private/categories', categories.getAll)
     .get('/api/private/categories/:id', categories.get)
-    .post('/api/private/categories',
-      passport.authenticate('admin-jwt', {session: false, failWithError: true}),
-      categories.create, adminAuthFailed)
-    .patch('/api/private/categories/:id', passport.authenticate('admin-jwt', {session: false, failWithError: true}),
-      categories.update, adminAuthFailed)
-    .delete('/api/private/categories/:id', passport.authenticate('admin-jwt', {session: false, failWithError: true}),
-      categories.remove, adminAuthFailed);
+    .post('/api/private/categories', categories.create)
+    .patch('/api/private/categories/:id', categories.update)
+    .delete('/api/private/categories/:id', categories.remove);
 
   router
     .get('/api/private/contacts', contacts.get)
-    .patch('/api/private/contacts/:id', passport.authenticate('admin-jwt', {
-      session: false,
-      failWithError: true
-    }), contacts.update, adminAuthFailed);
+    .patch('/api/private/contacts/:id', contacts.update);
 
   router
-    .get('/api/private/menu', passport.authenticate('admin-jwt', {
-      session: false,
-      failWithError: true
-    }), menu.getAll, adminAuthFailed)
-    .get('/api/private/menu/:category', passport.authenticate('admin-jwt', {
-      session: false,
-      failWithError: true
-    }), menu.getByCategory, adminAuthFailed)
-    .get('/api/private/menu/dish/:id', passport.authenticate('admin-jwt', {
-      session: false,
-      failWithError: true
-    }), menu.getById, adminAuthFailed)
-    .delete('/api/private/menu/:id', passport.authenticate('admin-jwt', {
-      session: false,
-      failWithError: true
-    }), menu.remove, adminAuthFailed)
-    .post('/api/private/menu', passport.authenticate('admin-jwt', {
-      session: false,
-      failWithError: true
-    }), upload.single('image'), menu.create, adminAuthFailed)
-    .patch('/api/private/menu/:id', passport.authenticate('admin-jwt', {
-      session: false,
-      failWithError: true
-    }), upload.single('image'), menu.update, adminAuthFailed);
+    .get('/api/private/menu', menu.getAll)
+    .get('/api/private/menu/:category', menu.getByCategory)
+    .get('/api/private/menu/dish/:id', menu.getById)
+    .delete('/api/private/menu/:id', menu.remove)
+    .post('/api/private/menu', menu.create)
+    .patch('/api/private/menu/:id', menu.update);
   // .post('/api/private/menu/:id', passport.authenticate('admin-jwt', {
   //     session: false,
   //     failWithError: true
   // }), uploadPDF.single('file'), menu.uploadPdf, adminAuthFailed)
 
   router
-    .get('/api/private/news', passport.authenticate('admin-jwt', {
-      session: false,
-      failWithError: true
-    }), news.getAll, adminAuthFailed)
-    .get('/api/private/news/:id', passport.authenticate('admin-jwt', {
-      session: false,
-      failWithError: true
-    }), news.getById, adminAuthFailed)
-    .post('/api/private/news', passport.authenticate('admin-jwt', {
-      session: false,
-      failWithError: true
-    }), upload.single('image'), news.create, adminAuthFailed)
-    .patch('/api/private/news/:id', passport.authenticate('admin-jwt', {
-      session: false,
-      failWithError: true
-    }), upload.single('image'), news.update, adminAuthFailed)
-    .delete('/api/private/news/:id', passport.authenticate('admin-jwt', {
-      session: false,
-      failWithError: true
-    }), news.delete, adminAuthFailed);
+    .get('/api/private/news', news.getAll)
+    .get('/api/private/news/:id', news.getById)
+    .post('/api/private/news', news.create)
+    .patch('/api/private/news/:id', news.update)
+    .delete('/api/private/news/:id', news.delete);
 
   router
-    .get('/api/private/orders', passport.authenticate('admin-jwt', {
-      session: false,
-      failWithError: true
-    }), orders.getAll, adminAuthFailed)
-    .get('/api/private/orders/:id', passport.authenticate('simple-jwt', {session: false}), orders.getById)
-    .patch('/api/private/orders/:id', passport.authenticate('admin-jwt', {
-      session: false,
-      failWithError: true
-    }), orders.update, adminAuthFailed)
-    .delete('/api/private/orders/:id', passport.authenticate('admin-jwt', {
-      session: false,
-      failWithError: true
-    }), orders.remove, adminAuthFailed);
+    .get('/api/private/orders', orders.getAll)
+    .get('/api/private/orders/:id', orders.getById)
+    .patch('/api/private/orders/:id', orders.update)
+    .delete('/api/private/orders/:id', orders.remove);
 
   router
-    .get('/api/private/promos', passport.authenticate('admin-jwt', {
-      session: false,
-      failWithError: true
-    }), promo.getAll, adminAuthFailed)
-    .get('/api/private/promos/:id', passport.authenticate('admin-jwt', {
-      session: false,
-      failWithError: true
-    }), promo.getById, adminAuthFailed)
-    .post('/api/private/promos', passport.authenticate('admin-jwt', {
-      session: false,
-      failWithError: true
-    }), upload.single('image'), promo.create, adminAuthFailed)
-    .patch('/api/private/promos/:id', passport.authenticate('admin-jwt', {
-      session: false,
-      failWithError: true
-    }), upload.single('image'), promo.update, adminAuthFailed);
+    .get('/api/private/promos', promo.getAll)
+    .get('/api/private/promos/:id', promo.getById)
+    .post('/api/private/promos', upload.single('image'), promo.create)
+    .patch('/api/private/promos/:id', upload.single('image'), promo.update);
 
 
   router
-    .get('/api/private/reviews', passport.authenticate('admin-jwt', {session: false, failWithError: true}),
-      reviews.getAll, adminAuthFailed)
-    .get('/api/private/reviews/:id', passport.authenticate('admin-jwt', {session: false}), reviews.getById)
-    .post('/api/private/reviews', passport.authenticate('admin-jwt', {session: false}), reviews.create)
-    .patch('/api/private/reviews/:id', passport.authenticate('admin-jwt', {session: false}), reviews.update)
-    .delete('/api/private/reviews/:id', passport.authenticate('admin-jwt', {session: false}), reviews.remove);
+    .get('/api/private/reviews', reviews.getAll)
+    .get('/api/private/reviews/:id', reviews.getById)
+    .post('/api/private/reviews', reviews.create)
+    .patch('/api/private/reviews/:id', reviews.update)
+    .delete('/api/private/reviews/:id', reviews.remove);
 
   router
-    .get('/api/private/users', passport.authenticate('admin-jwt', {
-      session: false,
-      failWithError: true
-    }), users.getAll, adminAuthFailed)
-    .get('/api/private/users/:id', passport.authenticate('admin-jwt', {
-      session: false,
-      failWithError: true
-    }), users.getById, adminAuthFailed)
-    .patch('/api/private/users/:id', passport.authenticate('admin-jwt', {
-      session: false,
-      failWithError: true
-    }), users.update, adminAuthFailed);
+    .get('/api/private/users', users.getAll)
+    .get('/api/private/users/:id', users.getById)
+    .patch('/api/private/users/:id', users.update);
 
   router
-    .get('/api/private/vacancies', passport.authenticate('admin-jwt', {
-      session: false,
-      failWithError: true
-    }), vacancies.getAll, adminAuthFailed)
-    .get('/api/private/vacancies/:id', passport.authenticate('admin-jwt', {
-      session: false,
-      failWithError: true
-    }), vacancies.getById, adminAuthFailed)
-    .post('/api/private/vacancies', passport.authenticate('admin-jwt', {
-      session: false,
-      failWithError: true
-    }), upload.single('image'), vacancies.create, adminAuthFailed)
-    .patch('/api/private/vacancies/:id', passport.authenticate('admin-jwt', {
-      session: false,
-      failWithError: true
-    }), upload.single('image'), vacancies.update, adminAuthFailed)
-    .delete('/api/private/vacancies/:id', passport.authenticate('admin-jwt', {
-      session: false,
-      failWithError: true
-    }), vacancies.remove, adminAuthFailed);
+    .get('/api/private/vacancies', vacancies.getAll)
+    .get('/api/private/vacancies/:id', vacancies.getById)
+    .post('/api/private/vacancies', vacancies.create)
+    .patch('/api/private/vacancies/:id', vacancies.update)
+    .delete('/api/private/vacancies/:id', vacancies.remove);
 
   router
-    .get('/api/private/delivery', passport.authenticate('admin-jwt', {
-      session: false,
-      failWithError: true
-    }), delivery.getAll, adminAuthFailed)
-    .get('/api/private/delivery/:id', passport.authenticate('admin-jwt', {
-      session: false,
-      failWithError: true
-    }), delivery.getById, adminAuthFailed)
-    .patch('/api/private/delivery/:id', passport.authenticate('admin-jwt', {
-      session: false,
-      failWithError: true
-    }), delivery.update, adminAuthFailed);
+    .get('/api/private/delivery', delivery.getAll)
+    .get('/api/private/delivery/:id', delivery.getById)
+    .patch('/api/private/delivery/:id', delivery.update);
 
   router
     .get('/api/private/delivery-settings/common/', commonDeliverySettings.getAll)
     .get('/api/private/delivery-settings/common/:id', commonDeliverySettings.getById)
-    .post('/api/private/delivery-settings/common/', passport.authenticate('admin-jwt', {
-      session: false,
-      failWithError: true
-    }), commonDeliverySettings.create, adminAuthFailed)
-    .patch('/api/private/delivery-settings/common/:id', passport.authenticate('admin-jwt', {
-      session: false,
-      failWithError: true
-    }), commonDeliverySettings.update, adminAuthFailed);
+    .post('/api/private/delivery-settings/common/', commonDeliverySettings.create)
+    .patch('/api/private/delivery-settings/common/:id', commonDeliverySettings.update);
 
   router
     .get('/api/private/delivery-settings/global/', globalDeliverySettings.get)
-    .patch('/api/private/delivery-settings/global/:id', passport.authenticate('admin-jwt', {
-      session: false,
-      failWithError: true
-    }), globalDeliverySettings.update, adminAuthFailed);
+    .patch('/api/private/delivery-settings/global/:id', globalDeliverySettings.update);
 
   router.get('/api/private/statistics/average-checks', averageChecks.get);
 
@@ -276,8 +161,8 @@ module.exports = io => {
 
   router
     .get('/api/public/me', profile.getMe)
-    .get('/api/public/me/orders', passport.authenticate('simple-jwt', {session: false}), profile.getMyOrders)
-    .put('/api/public/me', passport.authenticate('simple-jwt', {session: false}), profile.updateMe);
+    .get('/api/public/me/orders', profile.getMyOrders)
+    .put('/api/public/me', profile.updateMe);
 
   router
     .get('/api/public/promos', promo.getAll)
@@ -286,9 +171,9 @@ module.exports = io => {
   router
     .get('/api/public/reviews', reviews.publicGetAll)
     .get('/api/public/reviews/:id', reviews.getById)
-    .post('/api/public/reviews', passport.authenticate('simple-jwt', {session: false}), reviews.create)
-    .patch('/api/public/reviews/:id', passport.authenticate('simple-jwt', {session: false}), reviews.update)
-    .delete('/api/public/reviews/:id', passport.authenticate('simple-jwt', {session: false}), reviews.remove);
+    .post('/api/public/reviews', reviews.create)
+    .patch('/api/public/reviews/:id', reviews.update)
+    .delete('/api/public/reviews/:id', reviews.remove);
 
   router
     .get('/api/public/vacancies', vacancies.getAll)
@@ -298,27 +183,12 @@ module.exports = io => {
     .get('/api/public/complain-types', complainType.getAll);
 
   router
-    .get('/api/private/complain', passport.authenticate('admin-jwt', {
-      session: false,
-      failWithError: true
-    }), complain.getAll, adminAuthFailed)
-    .get('/api/private/complain/:id', passport.authenticate('admin-jwt', {
-      session: false,
-      failWithError: true
-    }), complain.get, adminAuthFailed)
-    .post('/api/private/complain', passport.authenticate('simple-jwt', {
-      session: false,
-      failWithError: true
-    }), complain.create, adminAuthFailed)
+    .get('/api/private/complain', complain.getAll)
+    .get('/api/private/complain/:id', complain.get)
+    .post('/api/private/complain', complain.create)
     .post('/api/public/complain', complain.create)
-    .patch('/api/private/complain/:id', passport.authenticate('admin-jwt', {
-      session: false,
-      failWithError: true
-    }), complain.update, adminAuthFailed)
-    .delete('/api/private/complain/:id', passport.authenticate('admin-jwt', {
-      session: false,
-      failWithError: true
-    }), complain.remove, adminAuthFailed);
+    .patch('/api/private/complain/:id', complain.update)
+    .delete('/api/private/complain/:id', complain.remove);
 
   // router.post('/', upload.array('files', 25), files.uploadFile)
 
