@@ -81,28 +81,36 @@ module.exports.create = async function (req, res) {
 }
 
 module.exports.update = async function (req, res) {
+    const { id } = req.params
+
+    const {
+        title,
+        description,
+        weight,
+        cost,
+        category,
+        is_delivery
+    } = req.body
+
     const updatedData = {
-        title: req.body.title,
-        description: req.body.description,
-        weight: req.body.weight,
-        cost: req.body.cost,
-        category: req.body.category,
-        is_delivery: req.body.is_delivery
+        title,
+        description,
+        weight,
+        cost,
+        category,
+        is_delivery
     }
 
     if (req.file) {
         updatedData.imageSrc = req.file.path
     }
-    const where = { id: req.params.id }
+    const where = { id }
 
-    const transaction = await sequelize.transaction()
     try {
-        await DishRepo.update(where, updatedData, transaction)
-        await transaction.commit()
-        const dish = await DishRepo.findById(req.params.id)
+        await DishRepo.update(where, updatedData)
+        const dish = await DishRepo.findById(id)
         res.status(200).json(dish)
     } catch (e) {
-        await transaction.rollback()
         errorHandler(res, e)
     }
 }

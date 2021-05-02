@@ -54,17 +54,14 @@ module.exports.create = async function (req, res) {
 }
 
 module.exports.update = async function (req, res) {
-    const transaction = await sequelize.transaction()
-
+    const { id } = req.params
     try {
-        const where = { id: req.params.id }
-        await CategoryRepo.update(where, req.body, transaction)
-        await transaction.commit()
+        const where = { id }
+        await CategoryRepo.update(where, req.body)
 
-        const category = await CategoryRepo.findById(req.params.id)
+        const category = await CategoryRepo.findById(id)
         res.status(200).json(category)
     } catch (e) {
-        await transaction.rollback()
         errorHandler(res, e)
     }
 }

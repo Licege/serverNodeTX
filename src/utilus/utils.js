@@ -1,4 +1,4 @@
-module.exports.parseLink = (data, fieldsWithLink = ['imageSrc']) => {
+const parseLink = (data, fieldsWithLink = ['imageSrc']) => {
     if (!data || typeof data === 'number' || typeof data === 'boolean') return null
 
     if (data instanceof Array) {
@@ -20,3 +20,5 @@ module.exports.parseLink = (data, fieldsWithLink = ['imageSrc']) => {
             : newObj
     }, {})
 }
+
+module.exports = { parseLink }

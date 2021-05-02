@@ -20,20 +20,32 @@ const { createDeliveryController } = require('../controllers/sockets/delivery');
 const whitelist = [
   'http://localhost:3000',
   'http://localhost:3001',
+  'http://localhost:9090',
   'http://pub.trixolma.localhost:3000',
   'http://dashboard.trixolma.localhost:3001'
 ]
 const configureOrigin = (origin, callback) => {
+  // callback(null, true)
   if (whitelist.indexOf(origin) !== -1) {
     callback(null, true)
-  } else
+  } else {
     callback(new Error('Not allowed by CORS'))
+  }
 }
 
 const start = () => {
   const app = express()
 
   app.use(cookieParser(process.env.SECRET))
+
+  const options = {
+    setHeaders: (res, path, stat) => {
+      res.set('Access-Control-Allow-Origin', '*')
+      res.set('Access-Control-Allow-Methods', 'GET')
+      res.set('Access-Control-Allow-Headers', 'Content-Type')
+    }
+  }
+  app.use('/uploads', express.static('uploads', options))
 
   app.use(require('cors')({
     credentials: true,
@@ -48,17 +60,18 @@ const start = () => {
   passport.deserializeUser((obj, done) => done(null, obj));
 
   app.use(require('morgan')('dev'))
-  app.use('/uploads', express.static('uploads'))
+  // app.use('/uploads', express.static('uploads', options))
   app.use(bodyParser.urlencoded({ extended: true }))
-  app.use(bodyParser.json({
-    limit: '10mb',
-    type: [
-      'json',
-      'application/csp-report',
-      'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,application/vnd.ms-excel',
-      'application/x-www-form-urlencoded'
-    ]
-  }))
+  app.use(bodyParser.json())
+  // app.use(bodyParser.json({
+  //   limit: '10mb',
+  //   type: [
+  //     'json',
+  //     'application/csp-report',
+  //     'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,application/vnd.ms-excel',
+  //     'application/x-www-form-urlencoded'
+  //   ]
+  // }))
 
   passport.use(
     'user-strategy',
@@ -72,13 +85,13 @@ const start = () => {
     ),
   )
 
-  app.use((req, res, next) => {
-    res.setHeader('Surrogate-Control', 'no-store');
-    res.setHeader('Cache-Control', 'no-store, no-cache, must-revalidate, proxy-revalidate');
-    res.setHeader('Pragma', 'no-cache');
-    res.setHeader('Expires', '0');
-    next();
-  });
+  // app.use((req, res, next) => {
+  //   res.setHeader('Surrogate-Control', 'no-store');
+  //   res.setHeader('Cache-Control', 'no-store, no-cache, must-revalidate, proxy-revalidate');
+  //   res.setHeader('Pragma', 'no-cache');
+  //   res.setHeader('Expires', '0');
+  //   next();
+  // });
 
   const session = sessionMiddleware({ rolling: true })
 
