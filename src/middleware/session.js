@@ -30,7 +30,8 @@ module.exports = ({ resave = true, saveUninitialized = false, rolling = true } =
     rolling,
     cookie: {
       maxAge: COOKIE_MAX_AGE === 'null' ? oneDay : oneDay,
-      domain: TRIXOLMA_BASE_DOMAIN,
+      // domain: TRIXOLMA_BASE_DOMAIN,
+      sameSite: 'none',
       expires: new Date(Date.now() + oneDay),
       originalMaxAge: oneDay
     },

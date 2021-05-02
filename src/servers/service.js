@@ -17,6 +17,18 @@ const { createDeliveryController } = require('../controllers/sockets/delivery');
 // const credentials = {key: privateKey, cert: certificate}
 /**/
 
+const whitelist = [
+  'http://localhost:3000',
+  'http://localhost:3001',
+  'http://pub.trixolma.localhost:3000',
+  'http://dashboard.trixolma.localhost:3001'
+]
+const configureOrigin = (origin, callback) => {
+  if (whitelist.indexOf(origin) !== -1) {
+    callback(null, true)
+  } else
+    callback(new Error('Not allowed by CORS'))
+}
 
 const start = () => {
   const app = express()
@@ -25,7 +37,7 @@ const start = () => {
 
   app.use(require('cors')({
     credentials: true,
-    origin: 'http://pub.trixolma.localhost:3000'
+    origin: configureOrigin
   }))
 
   // const socketServer = require('http').createServer(app)
@@ -33,10 +45,7 @@ const start = () => {
   // socketServer.listen(+process.env.SOCKET_PORT || 9091)
 
   passport.serializeUser((user, done) => done(null, user));
-  passport.deserializeUser((obj, done) => {
-    console.log('obj', obj);
-    done(null, obj);
-  });
+  passport.deserializeUser((obj, done) => done(null, obj));
 
   app.use(require('morgan')('dev'))
   app.use('/uploads', express.static('uploads'))
