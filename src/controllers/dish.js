@@ -59,23 +59,24 @@ module.exports.remove = async function (req, res) {
 }
 
 module.exports.create = async function (req, res) {
+    const { title, description, weight, cost, categoryId } = req.body
+    const imageSrc = req.file ? req.file.path : ''
+
     const dishToAdd = {
-        title: req.body.title,
-        description: req.body.description,
-        weight: req.body.weight,
-        cost: req.body.cost,
-        categoryId: req.body.categoryId,
-        imageSrc: req.file ? req.file.path : ''
+        title,
+        description,
+        weight,
+        cost,
+        categoryId,
+        imageSrc
     }
 
-    const transaction = await sequelize.transaction()
-
     try {
-        const dish = await DishRepo.create(dishToAdd, transaction)
-        await transaction.commit()
+        console.log(dishToAdd);
+        console.log(req.body);
+        const dish = await DishRepo.create(dishToAdd)
         res.status(201).json(dish)
     } catch (e) {
-        await transaction.rollback()
         errorHandler(res, e)
     }
 }

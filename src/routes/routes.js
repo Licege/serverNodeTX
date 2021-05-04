@@ -57,7 +57,7 @@ module.exports = io => {
     .get('/api/private/menu/:category', menu.getByCategory)
     .get('/api/private/menu/dish/:id', menu.getById)
     .delete('/api/private/menu/:id', menu.remove)
-    .post('/api/private/menu', menu.create)
+    .post('/api/private/menu', upload.single('image'), menu.create)
     .patch('/api/private/menu/:id', upload.single('image'), menu.update);
   // .post('/api/private/menu/:id', passport.authenticate('admin-jwt', {
   //     session: false,

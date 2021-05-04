@@ -38,5 +38,9 @@ module.exports = {
           })
 
         return dishes.map(dish => makeDish(dish));
+    },
+    create: async (values, transaction) => {
+      const dish = await Dish.create(values, transaction)
+      return makeDish(dish);
     }
 }
