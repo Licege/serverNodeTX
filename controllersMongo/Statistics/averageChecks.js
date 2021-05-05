@@ -1,5 +1,5 @@
 const Delivery = require('../../modelsMongo/delivery/Delivery')
-const errorHandler = require('../../src/utilus/errorHandler')
+const errorHandler = require('../../src/utils/errorHandler')
 
 module.exports.get = async function (req, res) {
     const query = {

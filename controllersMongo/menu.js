@@ -1,7 +1,7 @@
 const Dish = require('../modelsMongo/Menu')
 const Category = require('../modelsMongo/Category')
 const PdfMenu = require('../modelsMongo/PdfMenu')
-const errorHandler = require('../src/utilus/errorHandler')
+const errorHandler = require('../src/utils/errorHandler')
 
 module.exports.getAll = async function (req, res) {
     const query = {}

@@ -4,8 +4,8 @@ const {validationResult} = require('express-validator')
 const User = require('../modelsMongo/User')
 const Token = require('../modelsMongo/Token')
 const keys = require('../config/keys')
-const authHelper = require('../src/utilus/authHelper')
-const errorHandler = require('../src/utilus/errorHandler')
+const authHelper = require('../src/utils/authHelper')
+const errorHandler = require('../src/utils/errorHandler')
 
 const updateTokens = async (userId) => {
     const accessToken = await authHelper.generateAccessToken(userId)

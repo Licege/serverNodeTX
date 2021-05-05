@@ -1,5 +1,5 @@
 const File = require('../modelsMongo/Files')
-const errorHandler = require('../src/utilus/errorHandler')
+const errorHandler = require('../src/utils/errorHandler')
 
 module.exports.uploadFile = async function (req, res) {
      let result = []

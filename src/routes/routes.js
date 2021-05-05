@@ -1,7 +1,7 @@
 const router = require('express').Router();
 const passport = require('passport');
 const {check} = require('express-validator');
-const adminAuthFailed = require('../utilus/adminAuthFailed');
+const adminAuthFailed = require('../utils/adminAuthFailed');
 
 const upload = require('../middleware/upload');
 const uploadPDF = require('../middleware/uploadPDF');
@@ -67,8 +67,8 @@ module.exports = io => {
   router
     .get('/api/private/news', news.getAll)
     .get('/api/private/news/:id', news.getById)
-    .post('/api/private/news', news.create)
-    .patch('/api/private/news/:id', news.update)
+    .post('/api/private/news', upload.single('image'), news.create)
+    .patch('/api/private/news/:id', upload.single('image'), news.update)
     .delete('/api/private/news/:id', news.delete);
 
   router

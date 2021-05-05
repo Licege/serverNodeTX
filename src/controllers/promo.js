@@ -1,6 +1,6 @@
 const { sequelize } = require('../models').init()
 const PromosRepo = require('../repositories/promo')
-const errorHandler = require('../utilus/errorHandler')
+const errorHandler = require('../utils/errorHandler')
 
 module.exports.getAll = async function (req, res) {
     try {

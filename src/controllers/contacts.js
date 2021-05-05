@@ -1,6 +1,6 @@
 const { sequelize } = require('../models').init()
 const ContactsRepo = require('../repositories/contacts')
-const handlerError = require('../utilus/errorHandler')
+const handlerError = require('../utils/errorHandler')
 
 module.exports.get = async function (req, res) {
     try {

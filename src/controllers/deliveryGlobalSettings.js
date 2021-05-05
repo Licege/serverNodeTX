@@ -1,6 +1,6 @@
 const { sequelize } = require('../models').init()
 const GlobalSettingsRepo = require('../repositories/deliveryGlobalSettings')
-const errorHandler = require('../utilus/errorHandler')
+const errorHandler = require('../utils/errorHandler')
 
 module.exports.get = async function (req, res) {
     try {

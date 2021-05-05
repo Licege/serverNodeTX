@@ -1,6 +1,6 @@
 const Profile = require('../modelsMongo/User')
 const Delivery = require('../modelsMongo/delivery/Delivery')
-const errorHandler = require('../src/utilus/errorHandler')
+const errorHandler = require('../src/utils/errorHandler')
 
 const parsedProfile = (data) => {
     const { password, _id, __v, reg_date, imageSrc, ...rest } = data._doc

@@ -1,6 +1,6 @@
 const { sequelize, Category } = require('../models').init()
 const DishRepo = require('../repositories/dish')
-const errorHandler = require('../utilus/errorHandler')
+const errorHandler = require('../utils/errorHandler')
 
 module.exports.getAll = async function (req, res) {
     const where = {}
@@ -72,8 +72,6 @@ module.exports.create = async function (req, res) {
     }
 
     try {
-        console.log(dishToAdd);
-        console.log(req.body);
         const dish = await DishRepo.create(dishToAdd)
         res.status(201).json(dish)
     } catch (e) {

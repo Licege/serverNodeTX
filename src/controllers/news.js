@@ -1,6 +1,6 @@
 const { sequelize } = require('../models').init()
 const NewsRepo = require('../repositories/news')
-const handleError = require('../utilus/errorHandler')
+const handleError = require('../utils/errorHandler')
 
 module.exports.getAll = async function (req, res) {
     try {

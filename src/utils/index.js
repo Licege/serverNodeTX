@@ -21,4 +21,12 @@ const parseLink = (data, fieldsWithLink = ['imageSrc']) => {
     }, {})
 }
 
-module.exports = { parseLink }
+const { STORAGE_SRC } = process.env
+
+const prepareImageUrl = url => {
+    if (!url) return ''
+
+    return `${STORAGE_SRC}/${url.replace('\\', '/')}`
+}
+
+module.exports = { parseLink, prepareImageUrl }

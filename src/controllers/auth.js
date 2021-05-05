@@ -5,8 +5,8 @@ const { sequelize, User } = require('../models').init()
 const UserRepo = require('../repositories/user')
 const TokenRepo = require('../repositories/token')
 const keys = require('../../config/keys')
-const authHelper = require('../utilus/authHelper')
-const errorHandler = require('../utilus/errorHandler')
+const authHelper = require('../utils/authHelper')
+const errorHandler = require('../utils/errorHandler')
 
 const updateTokens = async (userId) => {
     const accessToken = await authHelper.generateAccessToken(userId)

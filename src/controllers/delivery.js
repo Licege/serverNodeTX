@@ -1,61 +1,63 @@
-const { sequelize, Delivery } = require('../models').init()
+const { Delivery, GlobalSettings, Settings } = require('../models').init()
 const DeliveryRepo = require('../repositories/delivery')
 const DishRepo = require('../repositories/dish')
-const errorHandler = require('../utilus/errorHandler')
+const errorHandler = require('../utils/errorHandler')
 
 module.exports.getAll = async function (req, res) {
+    const { phone, createdAtStart, createdAtEnd, totalPriceStart, totalPriceEnd, timeDeliveryStart, timeDeliveryEnd, paymentStatus, paymentType, deliveryStatus, deliveryType, status } = req.query
+
     const where = {}
 
-    if (req.query.phone) {
-        where.phone = { $regex: '.*' + req.query.phone + '.*' }
+    if (phone) {
+        where.phone = { $regex: `.*${phone}.*` }
     }
-    if (req.query.createdAtStart) {
+    if (createdAtStart) {
         where.createdAt = {
-            $gte: req.query.createdAtStart
+            $gte: createdAtStart
         }
     }
-    if (req.query.createdAtEnd) {
+    if (createdAtEnd) {
         if (!where.createdAt) {
             where.createdAt = {}
         }
-        where.createdAt['$lte'] = req.query.createdAtEnd
+        where.createdAt['$lte'] = createdAtEnd
     }
-    if (req.query.totalPriceStart) {
+    if (totalPriceStart) {
         where.totalPrice = {
-            $gte: req.query.totalPriceStart
+            $gte: totalPriceStart
         }
     }
-    if (req.query.totalPriceEnd) {
-        if (!req.query.totalPriceStart) {
+    if (totalPriceEnd) {
+        if (!totalPriceStart) {
             where.totalPrice = {}
         }
-        where.totalPrice['$lte'] = req.query.totalPriceStart
+        where.totalPrice['$lte'] = totalPriceStart
     }
-    if (req.query.timeDeliveryStart) {
+    if (timeDeliveryStart) {
         where.timeDelivery = {
-            $gte: req.query.timeDeliveryStart
+            $gte: timeDeliveryStart
         }
     }
-    if (req.query.timeDeliveryEnd) {
-        if (!req.query.timeDeliveryStart) {
+    if (timeDeliveryEnd) {
+        if (!timeDeliveryStart) {
             where.timeDelivery = {}
         }
-        where.timeDelivery['$lte'] = req.query.timeDeliveryEnd
+        where.timeDelivery['$lte'] = timeDeliveryEnd
     }
-    if (req.query.paymentStatus) {
-        where.paymentStatus = req.query.paymentStatus
+    if (paymentStatus) {
+        where.paymentStatus = paymentStatus
     }
-    if (req.query.deliveryStatus) {
-        where.deliveryStatus = req.query.deliveryStatus
+    if (deliveryStatus) {
+        where.deliveryStatus = deliveryStatus
     }
-    if (req.query.paymentType) {
-        where.paymentType = req.query.paymentType
+    if (paymentType) {
+        where.paymentType = paymentType
     }
-    if (req.query.deliveryType) {
-        where.deliveryType = req.query.deliveryType
+    if (deliveryType) {
+        where.deliveryType = deliveryType
     }
-    if (req.query.status) {
-        where.status = req.query.status
+    if (status) {
+        where.status = status
     }
 
     try {
@@ -83,59 +85,57 @@ module.exports.getById = async function (req, res) {
     }
 }
 
-// module.exports.create = async function (req, res) {
-//     const transaction = await sequelize.transaction();
-//
-//     try {
-//         //валидация
-//         const globalSettings = await GlobalSettings.findOne()
-//
-//         if (req.body.deliveryType === 'home') {
-//             const settings = await Settings.findOne({city: req.body.address.city})
-//             if (!settings) {
-//                 res.status(400).json({message: 'Невалидные данные!'})
-//             } else if (settings.freeDelivery > req.body.totalPrice && settings.priceForDelivery !== req.body.deliveryCost) {
-//                 res.status(400).json({message: 'Невалидные данные!'})
-//                 return;
-//             } else if (settings.freeDelivery <= req.body.totalPrice && req.body.deliveryCost !== 0) {
-//                 res.status(400).json({message: 'Невалидные данные!'})
-//                 return;
-//             }
-//         } else if (req.body.deliveryType === 'restaurant') {
-//             if (req.body.saleForPickup !== globalSettings.saleForPickup) {
-//                 res.status(400).json({message: 'Невалидные данные!'})
-//                 return;
-//             }
-//         }
-//
-//         const ids = req.body.list.map(({ id }) => id)
-//         const where = { id: ids }
-//         const dishes = await DishRepo.all(where)
-//         let countItem = 0;
-//         let totalPrice = 0;
-//         for (let i = 0; i < req.body.list.length; i++) {
-//
-//             let dish = dishes.find(dish => dish.id === req.body.list[i].dishId)
-//             if (req.body.list[i].cost !== dish.cost) {
-//                 res.status(400).json({message: 'Невалидные данные!'})
-//                 return;
-//             }
-//             totalPrice = totalPrice + dish.cost * req.body.list[i].count
-//             countItem++
-//         }
-//         if (req.body.totalPrice !== totalPrice || req.body.list.length !== countItem) {
-//             res.status(400).json({message: 'Невалидные данные!'})
-//             return;
-//         }
-//
-//         const delivery = await DeliveryRepo.create(req.body, transaction)
-//         await transaction.commit()
-//         res.status(201).json(delivery)
-//     } catch (e) {
-//         await transaction.rollback()
-//         errorHandler(res, e)
-//     }
-// }
+module.exports.create = async function (req, res) {
+    const { address, deliveryType, deliveryCost, totalPrice, saleForPickup, list } = req.body
+
+    try {
+        //валидация
+        const globalSettings = await GlobalSettings.findOne()
+
+        if (deliveryType === 'home') {
+            const settings = await Settings.findOne({city: address.city})
+            if (!settings) {
+                return res.status(400).json({message: 'Невалидные данные!'})
+            }
+            if (settings.freeDelivery > totalPrice && settings.priceForDelivery !== deliveryCost) {
+                return res.status(400).json({message: 'Невалидные данные!'})
+            }
+            if (settings.freeDelivery <= totalPrice && deliveryCost !== 0) {
+                return res.status(400).json({message: 'Невалидные данные!'})
+            }
+        } else if (deliveryType === 'restaurant') {
+            if (saleForPickup !== globalSettings.saleForPickup) {
+                return res.status(400).json({message: 'Невалидные данные!'})
+            }
+        }
+
+        const ids = list.map(({ id }) => id)
+        const where = { id: ids }
+        const dishes = await DishRepo.all(where)
+
+        let countItem = 0;
+        let calculatedTotalPrice = 0;
+
+        list.forEach(listItem => {
+            const dish = dishes.find(dish => dish.id === listItem.dishId)
+            if (listItem.cost !== dish.cost) {
+                return res.status(400).json({message: 'Невалидные данные!'})
+            }
+            calculatedTotalPrice += dish.cost * listItem.count
+            countItem++
+        })
+
+        if (totalPrice !== calculatedTotalPrice || list.length !== countItem) {
+            return res.status(400).json({message: 'Невалидные данные!'})
+        }
+
+        const delivery = await DeliveryRepo.create(req.body)
+
+        return res.status(201).json(delivery)
+    } catch (e) {
+        return errorHandler(res, e)
+    }
+}
 
 module.exports.update = async function (req, res) {
     try {

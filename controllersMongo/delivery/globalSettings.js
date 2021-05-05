@@ -1,5 +1,5 @@
 const GlobalSettings = require('../../modelsMongo/delivery/GlobalSettings')
-const errorHandler = require('../../src/utilus/errorHandler')
+const errorHandler = require('../../src/utils/errorHandler')
 
 module.exports.get = async function (req, res) {
     try {

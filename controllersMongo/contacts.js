@@ -1,5 +1,5 @@
 const Contacts = require('../modelsMongo/Contacts')
-const handlerError = require('../src/utilus/errorHandler')
+const handlerError = require('../src/utils/errorHandler')
 
 module.exports.get = async function (req, res) {
     try {

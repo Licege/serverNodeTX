@@ -1,5 +1,5 @@
 const Category = require('../modelsMongo/Category')
-const errorHandler = require('../src/utilus/errorHandler')
+const errorHandler = require('../src/utils/errorHandler')
 
 module.exports.getAll = async function (req, res) {
     try {

@@ -2,7 +2,7 @@ const Delivery = require('../../modelsMongo/delivery/Delivery')
 const Settings = require('../../modelsMongo/delivery/CommonSettings')
 const GlobalSettings = require('../../modelsMongo/delivery/GlobalSettings')
 const Dishes = require('../../modelsMongo/Menu')
-const errorHandler = require('../../src/utilus/errorHandler')
+const errorHandler = require('../../src/utils/errorHandler')
 
 module.exports.getAll = async function (req, res) {
     const query = {}

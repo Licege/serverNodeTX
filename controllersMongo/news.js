@@ -1,5 +1,5 @@
 const News = require('../modelsMongo/News')
-const handleError = require('../src/utilus/errorHandler')
+const handleError = require('../src/utils/errorHandler')
 
 module.exports.getAll = async function (req, res) {
     try {
@@ -24,7 +24,7 @@ module.exports.getById = async function (req, res) {
 }
 
 module.exports.create = async function (req, res) {const News = require('../modelsMongo/News')
-    const handleError = require('../src/utilus/errorHandler')
+    const handleError = require('../src/utils/errorHandler')
 
     module.exports.getAll = async function (req, res) {
         try {

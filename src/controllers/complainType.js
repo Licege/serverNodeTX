@@ -1,5 +1,5 @@
 const ComplainType = require('../repositories/complainType')
-const errorsHandler = require('../utilus/errorHandler')
+const errorsHandler = require('../utils/errorHandler')
 
 module.exports.getAll = async function(req, res) {
     try {
