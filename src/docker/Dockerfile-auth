@@ -1,6 +1,8 @@
 FROM node:16-alpine3.11
 
-VOLUME /var/www/app
+RUN apk add git \
+    && git clone https://github.com/Licege/serverNodeTX.git \
+    && cd serverNodeTX \
 WORKDIR /var/www/app
 
 EXPOSE 9092
