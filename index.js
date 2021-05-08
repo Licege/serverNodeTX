@@ -1,6 +1,11 @@
-const app = require('./app')
-const config = require('config')
-// const port = process.env.PORT || 9090
-const PORT = config.get('port') || 9090
+const service = require('./src/servers/service')
+const authorization = require('./src/servers/authorization')
 
-app.listen(PORT, () => console.log(`Server has been started on ${PORT}`))
+const mode = process.env.DEFAULT_EXECUTION_MODE || 'service'
+
+const servers = {
+  authorization,
+  service
+}
+
+module.exports = servers[mode]();
