@@ -1,4 +1,4 @@
-const { sequelize, Category } = require('../models').init()
+const { sequelize, Category, GlobalSettings } = require('../models').init()
 const DishRepo = require('../repositories/dish')
 const errorHandler = require('../utils/errorHandler')
 
@@ -113,22 +113,3 @@ module.exports.update = async function (req, res) {
         errorHandler(res, e)
     }
 }
-
-// module.exports.uploadPdf = async function (req, res) {
-//     try {
-//         if (req.file) {
-//             const menu = {
-//                 fileSrc: req.file.path
-//             }
-//
-//             await menu.save()
-//             res.status(201).json(menu)
-//         } else {
-//             res.status(400).json({
-//                 message: 'Ошибка файл не найден!'
-//             })
-//         }
-//     } catch (e) {
-//         errorHandler(res, e)
-//     }
-// }
